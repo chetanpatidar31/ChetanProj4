@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Built-By: patid
+Build-Jdk: 11.0.24
+Created-By: Maven Integration for Eclipse
+
