@@ -21,7 +21,7 @@ public class TestUserModel {
 //		testDelete();
 //		testFindByPk();
 //		testFindByLogin();
-		testAuthenticate();
+//		testAuthenticate();
 //		testSearch();
 	}
 

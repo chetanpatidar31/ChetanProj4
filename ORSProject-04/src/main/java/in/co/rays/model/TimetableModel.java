@@ -26,8 +26,7 @@ public class TimetableModel {
 			while (rs.next()) {
 				pk = rs.getInt(1);
 			}
-			rs.close();
-			pstmt.close();
+			JDBCDataSource.closeConnection(rs, pstmt);
 		} catch (SQLException e) {
 			throw new ApplicationException("Exception in timetable nextPk");
 		} finally {

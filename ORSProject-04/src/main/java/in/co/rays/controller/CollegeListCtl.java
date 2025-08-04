@@ -36,9 +36,6 @@ public class CollegeListCtl extends BaseCtl {
 		CollegeBean bean = new CollegeBean();
 
 		bean.setId(DataUtility.getLong(request.getParameter("collegeId")));
-		System.out.println("parameter : " + request.getParameter("collegeId"));
-		System.out.println("bean : " + bean.getId());
-
 		bean.setCity(DataUtility.getString(request.getParameter("city")));
 
 		return bean;

@@ -35,10 +35,7 @@ public class CollegeCtl extends BaseCtl {
 		if (DataValidator.isNull(request.getParameter("address"))) {
 			request.setAttribute("address", PropertyReader.getValue("error.require", "Address"));
 			isValid = false;
-		} else if (!DataValidator.isName(request.getParameter("address"))) {
-			request.setAttribute("address", PropertyReader.getValue("error.invalid", "Address"));
-			isValid = false;
-		}
+		} 
 
 		if (DataValidator.isNull(request.getParameter("state"))) {
 			request.setAttribute("state", PropertyReader.getValue("error.require", "State"));

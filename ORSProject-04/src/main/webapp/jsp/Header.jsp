@@ -2,12 +2,21 @@
 <%@page import="in.co.rays.controller.LoginCtl"%>
 <%@page import="in.co.rays.bean.UserBean"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
+<!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<!-- Include jQuery UI -->
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+<!-- Include jQuery UI CSS -->
+<link rel="stylesheet"
+	href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<script src="/ORSProject-04/js/checkbox.js"></script>
+<script src="/ORSProject-04/js/datepicker.js"></script>
 </head>
 <body>
 	<%
@@ -21,6 +30,15 @@
 		<%=user.getFirstName()%>
 		(<%=session.getAttribute("role")%>)
 	</h3>
+	<a href="<%=ORSView.MY_PROFILE_CTL%>"><b>My Profile</b></a>
+	<b>|</b>
+	<a href="<%=ORSView.CHANGE_PASSWORD_CTL%>"><b>Change Password</b></a>
+	<b>|</b>
+	<a href="<%=ORSView.GET_MARKSHEET_CTL%>"><b>Get Marksheet</b></a>
+	<b>|</b>
+	<a href="<%=ORSView.MARKSHEET_MERIT_LIST_CTL%>"><b>Marksheet
+			Merit List</b></a>
+	<b>|</b>
 	<a href="<%=ORSView.USER_CTL%>"><b>Add User</b></a>
 	<b>|</b>
 	<a href="<%=ORSView.USER_LIST_CTL%>"><b>User List</b></a>
@@ -57,14 +75,16 @@
 	<b>|</b>
 	<a href="<%=ORSView.FACULTY_LIST_CTL%>"><b>Faculty List</b></a>
 	<b>|</b>
-	
-	
+	<a href="<%=ORSView.JAVA_DOC%>" target="blank"><b>Java Doc</b></a>
+	<b>|</b>
+
+
 	<a href="<%=ORSView.LOGIN_CTL%>?operation=<%=LoginCtl.OP_LOG_OUT%>"><b>Logout</b></a>
 	<%
 		} else {
 	%>
 	<h3>Hi, Guest</h3>
-	<a href="<%=ORSView.WELCOME_CTL %>"><b>Welcome</b></a> |
+	<a href="<%=ORSView.WELCOME_CTL%>"><b>Welcome</b></a> |
 	<a href="<%=ORSView.LOGIN_CTL%>"><b>Login</b></a>
 	<%
 		}

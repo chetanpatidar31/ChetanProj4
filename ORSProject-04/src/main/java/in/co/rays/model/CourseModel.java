@@ -12,8 +12,20 @@ import in.co.rays.exception.ApplicationException;
 import in.co.rays.exception.DuplicateRecordException;
 import in.co.rays.util.JDBCDataSource;
 
+/**
+ * Model class for handling Course operations such as add, update, delete, find
+ * and search.
+ * 
+ * @author Chetan Patidar
+ */
 public class CourseModel {
 
+	/**
+	 * Returns the next primary key from the database.
+	 * 
+	 * @return next primary key value
+	 * @throws ApplicationException if a database exception occurs
+	 */
 	public Integer nextPk() throws ApplicationException {
 		int pk = 0;
 		Connection conn = null;
@@ -25,12 +37,23 @@ public class CourseModel {
 			while (rs.next()) {
 				pk = rs.getInt(1);
 			}
+			JDBCDataSource.closeConnection(rs, pstmt);
 		} catch (Exception e) {
 			throw new ApplicationException("Exception in Course next pk");
+		} finally {
+			JDBCDataSource.closeConnection(conn);
 		}
 		return pk + 1;
 	}
 
+	/**
+	 * Adds a new course to the database.
+	 * 
+	 * @param bean the CourseBean containing course details
+	 * @return the primary key of the newly added course
+	 * @throws ApplicationException     if a database exception occurs
+	 * @throws DuplicateRecordException if the course name already exists
+	 */
 	public Long add(CourseBean bean) throws ApplicationException, DuplicateRecordException {
 		CourseBean existBean = findByName(bean.getName());
 
@@ -73,6 +96,13 @@ public class CourseModel {
 		return pk;
 	}
 
+	/**
+	 * Updates the details of an existing course.
+	 * 
+	 * @param bean the CourseBean containing updated details
+	 * @throws ApplicationException     if a database exception occurs
+	 * @throws DuplicateRecordException if the course name already exists
+	 */
 	public void update(CourseBean bean) throws ApplicationException, DuplicateRecordException {
 
 		CourseBean existBean = findByName(bean.getName());
@@ -113,6 +143,12 @@ public class CourseModel {
 		}
 	}
 
+	/**
+	 * Deletes a course from the database.
+	 * 
+	 * @param bean the CourseBean containing the ID of the course to delete
+	 * @throws ApplicationException if a database exception occurs
+	 */
 	public void delete(CourseBean bean) throws ApplicationException {
 
 		Connection conn = null;
@@ -139,6 +175,13 @@ public class CourseModel {
 		}
 	}
 
+	/**
+	 * Finds a course by its primary key.
+	 * 
+	 * @param id the ID of the course to find
+	 * @return the CourseBean containing course details
+	 * @throws ApplicationException if a database exception occurs
+	 */
 	public CourseBean findByPk(Long id) throws ApplicationException {
 
 		Connection conn = null;
@@ -172,6 +215,13 @@ public class CourseModel {
 		return bean;
 	}
 
+	/**
+	 * Finds a course by its name.
+	 * 
+	 * @param name the name of the course
+	 * @return the CourseBean containing course details
+	 * @throws ApplicationException if a database exception occurs
+	 */
 	public CourseBean findByName(String name) throws ApplicationException {
 
 		Connection conn = null;
@@ -205,10 +255,25 @@ public class CourseModel {
 		return bean;
 	}
 
+	/**
+	 * Returns a list of all courses.
+	 * 
+	 * @return list of CourseBean
+	 * @throws ApplicationException if a database exception occurs
+	 */
 	public List<CourseBean> list() throws ApplicationException {
 		return search(null, 0, 0);
 	}
 
+	/**
+	 * Searches for courses matching given criteria and supports pagination.
+	 * 
+	 * @param bean     the search criteria
+	 * @param pageNo   the page number
+	 * @param pageSize the number of records per page
+	 * @return list of CourseBean matching criteria
+	 * @throws ApplicationException if a database exception occurs
+	 */
 	public List<CourseBean> search(CourseBean bean, int pageNo, int pageSize) throws ApplicationException {
 		StringBuffer sql = new StringBuffer("select * from st_course where 1=1 ");
 

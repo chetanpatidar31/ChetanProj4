@@ -26,8 +26,11 @@ public class StudentModel {
 			while (rs.next()) {
 				pk = rs.getInt(1);
 			}
+			JDBCDataSource.closeConnection(rs, pstmt);
 		} catch (Exception e) {
 			throw new ApplicationException("Exception in student next pk");
+		} finally {
+			JDBCDataSource.closeConnection(conn);
 		}
 		return pk + 1;
 	}

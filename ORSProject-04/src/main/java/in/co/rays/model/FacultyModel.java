@@ -19,16 +19,20 @@ public class FacultyModel {
 
 	public Integer nextPk() {
 		int pk = 0;
+		Connection conn = null;
 		try {
-			Connection conn = JDBCDataSource.getConnection();
+			conn = JDBCDataSource.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement("select max(id) from st_faculty");
 			ResultSet rs = pstmt.executeQuery();
 
 			while (rs.next()) {
 				pk = rs.getInt(1);
 			}
+			JDBCDataSource.closeConnection(rs, pstmt);
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			JDBCDataSource.closeConnection(conn);
 		}
 		return pk + 1;
 	}
