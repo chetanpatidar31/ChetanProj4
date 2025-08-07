@@ -103,8 +103,16 @@ public class LoginCtl extends BaseCtl {
 					if (roleBean != null) {
 						session.setAttribute("role", roleBean.getName());
 					}
-					ServletUtility.redirect(ORSView.WELCOME_CTL, request, response);
-					return;
+
+					String uri = (String) request.getParameter("uri");
+					if (uri == null || "null".equalsIgnoreCase(uri)) {
+						ServletUtility.redirect(ORSView.WELCOME_CTL, request, response);
+						return;
+					} else {
+						ServletUtility.redirect(uri, request, response);
+						return;
+					}
+
 				} else {
 					bean = (UserBean) populateBean(request);
 					ServletUtility.setBean(bean, request);

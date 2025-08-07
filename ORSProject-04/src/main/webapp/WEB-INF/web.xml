@@ -12,6 +12,6 @@
   </servlet>
   <servlet-mapping>
   	<servlet-name>FacultyCtl</servlet-name>
-  	<url-pattern>/FacultyCtl</url-pattern>
+  	<url-pattern>/ctl/FacultyCtl</url-pattern>
   </servlet-mapping>
 </web-app>

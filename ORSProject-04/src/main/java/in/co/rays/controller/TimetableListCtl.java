@@ -18,7 +18,7 @@ import in.co.rays.util.DataUtility;
 import in.co.rays.util.PropertyReader;
 import in.co.rays.util.ServletUtility;
 
-@WebServlet(name = "TimetableListCtl",urlPatterns = {"/TimetableListCtl"})
+@WebServlet(name = "TimetableListCtl",urlPatterns = {"/ctl/TimetableListCtl"})
 public class TimetableListCtl extends BaseCtl{
 	
 	@Override
@@ -135,10 +135,8 @@ public class TimetableListCtl extends BaseCtl{
 			list = model.search(bean, pageNo, pageSize);
 			next = model.search(bean, pageNo + 1, pageSize);
 
-			if (!OP_DELETE.equalsIgnoreCase(op)) {
-				if (list == null || list.size() == 0) {
-					ServletUtility.setErrorMessage("No Records Found", request);
-				}
+			if (list == null || list.size() == 0) {
+				ServletUtility.setErrorMessage("No record found ", request);
 			}
 
 			ServletUtility.setList(list, request);

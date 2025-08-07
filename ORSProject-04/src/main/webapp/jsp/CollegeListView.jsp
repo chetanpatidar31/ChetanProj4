@@ -86,7 +86,7 @@
                     <td style="text-align: center; text-transform: capitalize;"><%=bean.getState()%></td>
                     <td style="text-align: center; text-transform: capitalize;"><%=bean.getCity()%></td>
                     <td style="text-align: center;"><%=bean.getPhoneNo()%></td>
-                    <td style="text-align: center;"><a href="CollegeCtl?id=<%=bean.getId()%>">Edit</a></td>
+                    <td style="text-align: center;"><a href="<%=ORSView.COLLEGE_CTL%>?id=<%=bean.getId()%>">Edit</a></td>
                 </tr>
                 <%
                     }

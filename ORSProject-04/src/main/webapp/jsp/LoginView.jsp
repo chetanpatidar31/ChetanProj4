@@ -3,7 +3,7 @@
 <%@page import="in.co.rays.util.DataUtility"%>
 <%@page import="in.co.rays.controller.ORSView"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -74,10 +74,12 @@
 				</tr>
 				<tr>
 					<th></th>
-					<td><a href="<%=ORSView.FORGET_PASSWORD_CTL%>"><b>Forget my password?</b></a>&nbsp;</td>
+					<td><a href="<%=ORSView.FORGET_PASSWORD_CTL%>"><b>Forget
+								my password?</b></a>&nbsp;</td>
 				</tr>
 			</table>
 		</div>
+		<input type="hidden" name="uri" value="<%=uri%>">
 	</form>
 </body>
 </html>

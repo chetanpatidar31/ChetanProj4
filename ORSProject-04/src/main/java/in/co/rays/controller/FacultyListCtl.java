@@ -16,8 +16,10 @@ import in.co.rays.util.DataUtility;
 import in.co.rays.util.PropertyReader;
 import in.co.rays.util.ServletUtility;
 
-@WebServlet(name = "FacultyListCtl", urlPatterns = { "/FacultyListCtl" })
+@WebServlet(name = "FacultyListCtl", urlPatterns = { "/ctl/FacultyListCtl" })
 public class FacultyListCtl extends BaseCtl {
+
+	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected BaseBean populateBean(HttpServletRequest request) {
@@ -65,8 +67,8 @@ public class FacultyListCtl extends BaseCtl {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		List list = null;
-		List next = null;
+		List<FacultyBean> list = null;
+		List<FacultyBean> next = null;
 
 		int pageNo = DataUtility.getInt(request.getParameter("pageNo"));
 		int pageSize = DataUtility.getInt(request.getParameter("pageSize"));
@@ -118,10 +120,10 @@ public class FacultyListCtl extends BaseCtl {
 			list = model.search(bean, pageNo, pageSize);
 			next = model.search(bean, pageNo + 1, pageSize);
 
-			if (list.size() == 0) {
-				ServletUtility.setErrorMessage("No Record Found", request);
+			if (list == null || list.size() == 0) {
+				ServletUtility.setErrorMessage("No record found ", request);
 			}
-
+			
 			ServletUtility.setList(list, request);
 			ServletUtility.setPageNo(pageNo, request);
 			ServletUtility.setPageSize(pageSize, request);

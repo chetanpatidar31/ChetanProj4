@@ -16,7 +16,7 @@ import in.co.rays.util.DataUtility;
 import in.co.rays.util.PropertyReader;
 import in.co.rays.util.ServletUtility;
 
-@WebServlet(name = "CourseListCtl", urlPatterns = { "/CourseListCtl" })
+@WebServlet(name = "CourseListCtl", urlPatterns = { "/ctl/CourseListCtl" })
 public class CourseListCtl extends BaseCtl {
 
 	@Override
@@ -134,10 +134,8 @@ public class CourseListCtl extends BaseCtl {
 			list = model.search(bean, pageNo, pageSize);
 			next = model.search(bean, pageNo + 1, pageSize);
 			
-			if (!OP_DELETE.equalsIgnoreCase(op)) {
-				if (list.size()==0) {
-					ServletUtility.setErrorMessage("No record found", request);
-				}
+			if (list.size()==0) {
+				ServletUtility.setErrorMessage("No record found", request);
 			}
 			
 			ServletUtility.setList(list, request);

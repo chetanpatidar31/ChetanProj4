@@ -293,7 +293,7 @@ public class MarksheetModel {
 
 		if (pageSize > 0) {
 			pageNo = (pageNo - 1) * pageSize;
-			sql.append(" limit " + pageNo + ", " + 5);
+			sql.append(" limit " + pageNo + ", " + pageSize);
 		}
 
 		Connection conn = null;

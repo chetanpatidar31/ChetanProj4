@@ -98,7 +98,7 @@
                     <td style="text-align: center;"><%=total%></td>
                     <td style="text-align: center;"><%=percentage%> %</td>
                     <td style="text-align: center;">
-                        <a href="MarksheetCtl?id=<%=bean.getId()%>">Edit</a>
+                        <a href="<%=ORSView.MARKSHEET_CTL%>?id=<%=bean.getId()%>">Edit</a>
                     </td>
                 </tr>
                 <%
