@@ -7,14 +7,33 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import in.co.rays.bean.CourseBean;
 import in.co.rays.bean.SubjectBean;
 import in.co.rays.exception.ApplicationException;
 import in.co.rays.exception.DuplicateRecordException;
 import in.co.rays.util.JDBCDataSource;
 
+/**
+ * Model class for managing Subject entities in the database. Provides CRUD
+ * operations and search functionalities.
+ * 
+ * @author Chetan Patidar
+ */
 public class SubjectModel {
+
+	Logger log = Logger.getLogger(SubjectModel.class);
+
+	/**
+	 * Returns the next primary key for the subject table.
+	 * 
+	 * @return next primary key as Integer
+	 * @throws ApplicationException if a database error occurs
+	 */
 	public Integer nextPk() throws ApplicationException {
+		log.info("SubjectModel nextPk Started");
+
 		int pk = 0;
 		Connection conn = null;
 		try {
@@ -31,10 +50,20 @@ public class SubjectModel {
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
+		log.info("SubjectModel nextPk Ended");
 		return pk + 1;
 	}
 
+	/**
+	 * Adds a new Subject to the database.
+	 * 
+	 * @param bean SubjectBean containing subject data
+	 * @return the generated primary key
+	 * @throws ApplicationException     if a database error occurs
+	 * @throws DuplicateRecordException if subject name already exists
+	 */
 	public Long add(SubjectBean bean) throws ApplicationException, DuplicateRecordException {
+		log.info("SubjectModel add Started");
 
 		CourseModel courseModel = new CourseModel();
 		CourseBean courseBean = courseModel.findByPk(bean.getCourseId());
@@ -79,10 +108,19 @@ public class SubjectModel {
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
+		log.info("SubjectModel add Ended");
 		return pk;
 	}
 
+	/**
+	 * Updates an existing Subject in the database.
+	 * 
+	 * @param bean SubjectBean containing updated data
+	 * @throws ApplicationException     if a database error occurs
+	 * @throws DuplicateRecordException if duplicate subject name exists
+	 */
 	public void update(SubjectBean bean) throws ApplicationException, DuplicateRecordException {
+		log.info("SubjectModel update Started");
 
 		CourseModel cModel = new CourseModel();
 		CourseBean cBean = cModel.findByPk(bean.getCourseId());
@@ -126,9 +164,17 @@ public class SubjectModel {
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
+		log.info("SubjectModel update Ended");
 	}
 
+	/**
+	 * Deletes a Subject from the database.
+	 * 
+	 * @param bean SubjectBean containing subject ID to delete
+	 * @throws ApplicationException if a database error occurs
+	 */
 	public void delete(SubjectBean bean) throws ApplicationException {
+		log.info("SubjectModel delete Started");
 
 		Connection conn = null;
 		try {
@@ -152,9 +198,18 @@ public class SubjectModel {
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
+		log.info("SubjectModel delete Ended");
 	}
 
+	/**
+	 * Finds a Subject by its primary key.
+	 * 
+	 * @param id the ID of the subject
+	 * @return SubjectBean if found, else null
+	 * @throws ApplicationException if a database error occurs
+	 */
 	public SubjectBean findByPk(Long id) throws ApplicationException {
+		log.info("SubjectModel findByPk Started");
 
 		Connection conn = null;
 		SubjectBean bean = null;
@@ -185,10 +240,19 @@ public class SubjectModel {
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
+		log.info("SubjectModel findByPk Ended");
 		return bean;
 	}
 
+	/**
+	 * Finds a Subject by its name.
+	 * 
+	 * @param name the name of the subject
+	 * @return SubjectBean if found, else null
+	 * @throws ApplicationException if a database error occurs
+	 */
 	public SubjectBean findByName(String name) throws ApplicationException {
+		log.info("SubjectModel findbyName Started");
 
 		Connection conn = null;
 		SubjectBean bean = null;
@@ -219,14 +283,33 @@ public class SubjectModel {
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
+		log.info("SubjectModel findbyName Ended");
 		return bean;
 	}
 
+	/**
+	 * Returns a list of all Subjects.
+	 * 
+	 * @return list of SubjectBeans
+	 * @throws ApplicationException if a database error occurs
+	 */
 	public List<SubjectBean> list() throws ApplicationException {
+		log.info("SubjectModel list Method");
 		return search(null, 0, 0);
 	}
 
+	/**
+	 * Searches Subjects with optional pagination and filtering.
+	 * 
+	 * @param bean     filter criteria
+	 * @param pageNo   current page number
+	 * @param pageSize number of records per page
+	 * @return list of SubjectBeans matching criteria
+	 * @throws ApplicationException if a database error occurs
+	 */
 	public List<SubjectBean> search(SubjectBean bean, int pageNo, int pageSize) throws ApplicationException {
+		log.info("SubjectModel search Started");
+
 		StringBuffer sql = new StringBuffer("select * from st_subject where 1=1 ");
 
 		if (bean != null) {
@@ -275,6 +358,7 @@ public class SubjectModel {
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
+		log.info("SubjectModel search Ended");
 		return list;
 	}
 }

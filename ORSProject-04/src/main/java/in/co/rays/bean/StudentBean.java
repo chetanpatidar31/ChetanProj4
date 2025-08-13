@@ -2,6 +2,14 @@ package in.co.rays.bean;
 
 import java.util.Date;
 
+/**
+ * Student JavaBean encapsulates Student attributes
+ * 
+ * @author Chetan Patidar
+ * @version 1.0 
+ * Copyright (c) Chetan Patidar
+ * 
+ */
 public class StudentBean extends BaseBean {
 	private String firstName;
 	private String lastName;

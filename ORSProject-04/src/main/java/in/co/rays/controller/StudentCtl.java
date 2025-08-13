@@ -8,6 +8,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import in.co.rays.bean.BaseBean;
 import in.co.rays.bean.CollegeBean;
 import in.co.rays.bean.StudentBean;
@@ -20,23 +22,49 @@ import in.co.rays.util.DataValidator;
 import in.co.rays.util.PropertyReader;
 import in.co.rays.util.ServletUtility;
 
+/**
+ * Controller to handle Student add/update operations. Handles form validation,
+ * population, and submission for the Student entity.
+ * 
+ * Functionalities: - Add new student - Update existing student - Form
+ * validation - Preload college dropdown
+ * 
+ * @author Chetan Patidar
+ */
 @WebServlet(name = "StudentCtl", urlPatterns = "/ctl/StudentCtl")
 public class StudentCtl extends BaseCtl {
 
+	Logger log = Logger.getLogger(StudentCtl.class);
+	
+	/**
+	 * Preloads list of colleges for the college dropdown in student form.
+	 *
+	 * @param request the HttpServletRequest object
+	 */
 	@Override
 	protected void preload(HttpServletRequest request) {
+		log.info("StudentCtl preload Method Started");
+		
 		CollegeModel model = new CollegeModel();
 		try {
 			List<CollegeBean> collegeList = model.list();
 			request.setAttribute("collegeList", collegeList);
 		} catch (ApplicationException e) {
 			e.printStackTrace();
-			return;
 		}
+		log.info("StudentCtl preload Method Ended");
 	}
 
+	/**
+	 * Validates the input parameters from the request for student form.
+	 *
+	 * @param request the HttpServletRequest object
+	 * @return true if valid, false otherwise
+	 */
 	@Override
 	protected boolean validate(HttpServletRequest request) {
+		log.info("StudentCtl validate Method Started");
+		
 		boolean isValid = true;
 
 		if (DataValidator.isNull(request.getParameter("firstName"))) {
@@ -92,12 +120,20 @@ public class StudentCtl extends BaseCtl {
 			isValid = false;
 		}
 
+		log.info("StudentCtl validate Method Ended");
 		return isValid;
 	}
 
+	/**
+	 * Populates a StudentBean from request parameters.
+	 *
+	 * @param request the HttpServletRequest object
+	 * @return populated StudentBean
+	 */
 	@Override
 	protected BaseBean populateBean(HttpServletRequest request) {
-
+		log.info("StudentCtl populateBean Method Started");
+		
 		StudentBean bean = new StudentBean();
 
 		bean.setId(DataUtility.getLong(request.getParameter("id")));
@@ -111,13 +147,23 @@ public class StudentCtl extends BaseCtl {
 
 		populateDTO(bean, request);
 
+		log.info("StudentCtl populateBean Method Ended");
 		return bean;
 	}
 
+	/**
+	 * Handles GET request to display student form for edit/view.
+	 *
+	 * @param request  the HttpServletRequest object
+	 * @param response the HttpServletResponse object
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		log.info("StudentCtl doGet Method Started");
+		
 		int id = DataUtility.getInt(request.getParameter("id"));
 
 		StudentModel model = new StudentModel();
@@ -128,16 +174,25 @@ public class StudentCtl extends BaseCtl {
 				ServletUtility.setBean(bean, request);
 			} catch (ApplicationException e) {
 				e.printStackTrace();
-				return;
 			}
 		}
 
+		log.info("StudentCtl doGet Method Ended");
 		ServletUtility.forward(getView(), request, response);
 	}
 
+	/**
+	 * Handles POST request for add, update, reset, and cancel operations.
+	 *
+	 * @param request  the HttpServletRequest object
+	 * @param response the HttpServletResponse object
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		log.info("StudentCtl doPost Method Started");
 
 		String op = DataUtility.getString(request.getParameter("operation"));
 
@@ -152,11 +207,11 @@ public class StudentCtl extends BaseCtl {
 				ServletUtility.setSuccessMessage("Student added Successfully", request);
 			} catch (ApplicationException e) {
 				e.printStackTrace();
-				return;
 			} catch (DuplicateRecordException e) {
 				ServletUtility.setBean(bean, request);
 				ServletUtility.setErrorMessage("Student email Already exists", request);
 			}
+
 		} else if (OP_UPDATE.equalsIgnoreCase(op)) {
 			StudentBean bean = (StudentBean) populateBean(request);
 
@@ -166,25 +221,31 @@ public class StudentCtl extends BaseCtl {
 				ServletUtility.setSuccessMessage("Student updated Successfully", request);
 			} catch (ApplicationException e) {
 				e.printStackTrace();
-				return;
 			} catch (DuplicateRecordException e) {
 				ServletUtility.setBean(bean, request);
 				ServletUtility.setErrorMessage("Student email Already exists", request);
 			}
-		}else if (OP_RESET.equalsIgnoreCase(op)) {
+
+		} else if (OP_RESET.equalsIgnoreCase(op)) {
 			ServletUtility.redirect(ORSView.STUDENT_CTL, request, response);
 			return;
-		}else if (OP_CANCEL.equalsIgnoreCase(op)) {
+
+		} else if (OP_CANCEL.equalsIgnoreCase(op)) {
 			ServletUtility.redirect(ORSView.STUDENT_LIST_CTL, request, response);
 			return;
 		}
 
+		log.info("StudentCtl doPost Method Ended");
 		ServletUtility.forward(getView(), request, response);
 	}
 
+	/**
+	 * Returns the view path for student form.
+	 *
+	 * @return student view JSP path
+	 */
 	@Override
 	protected String getView() {
 		return ORSView.STUDENT_VIEW;
 	}
-
 }

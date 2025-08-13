@@ -1,7 +1,16 @@
 package in.co.rays.bean;
 
+/**
+ * Role JavaBean encapsulates Role attributes
+ * 
+ * @author Chetan Patidar
+ * @version 1.0 Copyright (c) Chetan Patidar
+ * 
+ */
 public class RoleBean extends BaseBean {
-
+	/**
+	 * Predefined Role constants
+	 */
 	public static final int ADMIN = 1;
 	public static final int STUDENT = 2;
 	public static final int COLLEGE = 3;

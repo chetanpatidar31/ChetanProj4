@@ -8,25 +8,39 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import in.co.rays.bean.BaseBean;
 import in.co.rays.bean.CourseBean;
 import in.co.rays.bean.SubjectBean;
-import in.co.rays.bean.UserBean;
 import in.co.rays.exception.ApplicationException;
 import in.co.rays.exception.DuplicateRecordException;
 import in.co.rays.model.CourseModel;
 import in.co.rays.model.SubjectModel;
-import in.co.rays.model.UserModel;
 import in.co.rays.util.DataUtility;
 import in.co.rays.util.DataValidator;
 import in.co.rays.util.PropertyReader;
 import in.co.rays.util.ServletUtility;
 
+/**
+ * Subject Controller. Handles operations related to Subject entity including
+ * preload of course list, validation, add, update, and redirection.
+ * 
+ * @author Chetan Patidar
+ */
 @WebServlet(name = "SubjectCtl", urlPatterns = { "/ctl/SubjectCtl" })
 public class SubjectCtl extends BaseCtl {
 
+	Logger log = Logger.getLogger(SubjectCtl.class);
+
+	/**
+	 * Loads list of courses to be used in Subject form.
+	 *
+	 * @param request HttpServletRequest
+	 */
 	@Override
 	protected void preload(HttpServletRequest request) {
+		log.info("SubjectCtl preload Method Started");
 
 		CourseModel model = new CourseModel();
 
@@ -37,10 +51,19 @@ public class SubjectCtl extends BaseCtl {
 			e.printStackTrace();
 			return;
 		}
+		log.info("SubjectCtl preload Method Ended");
 	}
 
+	/**
+	 * Validates Subject form input parameters.
+	 *
+	 * @param request HttpServletRequest
+	 * @return true if input is valid, otherwise false
+	 */
 	@Override
 	protected boolean validate(HttpServletRequest request) {
+		log.info("SubjectCtl validate Method Started");
+
 		boolean isValid = true;
 
 		if (DataValidator.isNull(request.getParameter("name"))) {
@@ -61,11 +84,20 @@ public class SubjectCtl extends BaseCtl {
 			isValid = false;
 		}
 
+		log.info("SubjectCtl validate Method Ended");
 		return isValid;
 	}
 
+	/**
+	 * Populates SubjectBean from request parameters.
+	 *
+	 * @param request HttpServletRequest
+	 * @return SubjectBean populated with form data
+	 */
 	@Override
 	protected BaseBean populateBean(HttpServletRequest request) {
+		log.info("SubjectCtl populateBean Method Started");
+
 		SubjectBean bean = new SubjectBean();
 
 		bean.setName(DataUtility.getString(request.getParameter("name")));
@@ -74,12 +106,22 @@ public class SubjectCtl extends BaseCtl {
 
 		populateDTO(bean, request);
 
+		log.info("SubjectCtl populateBean Method Ended");
 		return bean;
 	}
 
+	/**
+	 * Handles GET requests to populate form for editing existing subject.
+	 *
+	 * @param request  HttpServletRequest
+	 * @param response HttpServletResponse
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		log.info("SubjectCtl doGet Method Started");
 
 		long id = DataUtility.getLong(request.getParameter("id"));
 
@@ -94,12 +136,22 @@ public class SubjectCtl extends BaseCtl {
 				return;
 			}
 		}
+		log.info("SubjectCtl doGet Method Ended");
 		ServletUtility.forward(getView(), request, response);
 	}
 
+	/**
+	 * Handles POST requests for add, update, reset, and cancel operations.
+	 *
+	 * @param request  HttpServletRequest
+	 * @param response HttpServletResponse
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		log.info("SubjectCtl doPost Method Started");
 
 		String op = DataUtility.getString(request.getParameter("operation"));
 
@@ -147,9 +199,15 @@ public class SubjectCtl extends BaseCtl {
 			return;
 		}
 
+		log.info("SubjectCtl doPost Method Ended");
 		ServletUtility.forward(getView(), request, response);
 	}
 
+	/**
+	 * Returns the view for Subject form.
+	 *
+	 * @return String view page path
+	 */
 	@Override
 	protected String getView() {
 		return ORSView.SUBJECT_VIEW;

@@ -8,6 +8,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import in.co.rays.bean.BaseBean;
 import in.co.rays.bean.CourseBean;
 import in.co.rays.bean.TimetableBean;
@@ -18,42 +20,75 @@ import in.co.rays.util.DataUtility;
 import in.co.rays.util.PropertyReader;
 import in.co.rays.util.ServletUtility;
 
-@WebServlet(name = "TimetableListCtl",urlPatterns = {"/ctl/TimetableListCtl"})
-public class TimetableListCtl extends BaseCtl{
-	
+/**
+ * Timetable List Controller to handle listing, searching, pagination, and
+ * deleting of timetable records.
+ * 
+ * Author: Chetan Patidar
+ */
+@WebServlet(name = "TimetableListCtl", urlPatterns = { "/ctl/TimetableListCtl" })
+public class TimetableListCtl extends BaseCtl {
+
+	Logger log = Logger.getLogger(TimetableListCtl.class);
+
+	/**
+	 * Preloads course list and timetable (subject) list for the view.
+	 * 
+	 * @param request HttpServletRequest
+	 */
 	@Override
 	protected void preload(HttpServletRequest request) {
+		log.info("TimetableListCtl preload Method Started");
+
 		CourseModel courseModel = new CourseModel();
-		TimetableModel TimetableModel = new TimetableModel();
+		TimetableModel timetableModel = new TimetableModel();
 
 		try {
 			List<CourseBean> courseList = courseModel.list();
-			List<TimetableBean> subjectList = TimetableModel.list();
-			
+			List<TimetableBean> subjectList = timetableModel.list();
+
 			request.setAttribute("courseList", courseList);
 			request.setAttribute("subjectList", subjectList);
 		} catch (ApplicationException e) {
 			e.printStackTrace();
 			return;
 		}
-
+		log.info("TimetableListCtl preload Method Ended");
 	}
-	
+
+	/**
+	 * Populates TimetableBean from request parameters for searching.
+	 * 
+	 * @param request HttpServletRequest
+	 * @return BaseBean populated TimetableBean
+	 */
 	@Override
 	protected BaseBean populateBean(HttpServletRequest request) {
+		log.info("TimetableListCtl populateBean Method Started");
 
-		TimetableBean bean =new TimetableBean();
-		
+		TimetableBean bean = new TimetableBean();
+
 		bean.setSubjectId(DataUtility.getLong(request.getParameter("subjectId")));
 		bean.setCourseId(DataUtility.getLong(request.getParameter("courseId")));
 		bean.setExamDate(DataUtility.getDate(request.getParameter("examDate")));
 
+		log.info("TimetableListCtl populateBean Method Ended");
 		return bean;
-		
+
 	}
-	
+
+	/**
+	 * Handles GET request for listing timetable records with pagination.
+	 * 
+	 * @param request  HttpServletRequest
+	 * @param response HttpServletResponse
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		log.info("TimetableListCtl doGet Method Started");
 
 		int pageNo = 1;
 		int pageSize = DataUtility.getInt(PropertyReader.getValue("page.size"));
@@ -73,17 +108,28 @@ public class TimetableListCtl extends BaseCtl{
 			ServletUtility.setBean(bean, request);
 			request.setAttribute("nextListSize", next.size());
 
-			ServletUtility.forward(getView(), request, response);
-
 		} catch (ApplicationException e) {
 			e.printStackTrace();
 			return;
 		}
 
+		log.info("TimetableListCtl doGet Method Ended");
+		ServletUtility.forward(getView(), request, response);
 	}
-	
+
+	/**
+	 * Handles POST request for search, pagination, new record creation, delete,
+	 * reset, and back operations.
+	 * 
+	 * @param request  HttpServletRequest
+	 * @param response HttpServletResponse
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		log.info("TimetableListCtl doPost Method Started");
 
 		List list = null;
 		List next = null;
@@ -119,10 +165,10 @@ public class TimetableListCtl extends BaseCtl{
 					for (String id : ids) {
 						deleteBean.setId(DataUtility.getLong(id));
 						model.delete(deleteBean);
-						ServletUtility.setSuccessMessage("Timetable Deleted Succesfully", request);
+						ServletUtility.setSuccessMessage("Timetable Deleted Successfully", request);
 					}
 				} else {
-					ServletUtility.setErrorMessage("Select atleast one Record", request);
+					ServletUtility.setErrorMessage("Select at least one Record", request);
 				}
 			} else if (OP_RESET.equalsIgnoreCase(op)) {
 				ServletUtility.redirect(ORSView.TIMETABLE_LIST_CTL, request, response);
@@ -145,13 +191,19 @@ public class TimetableListCtl extends BaseCtl{
 			ServletUtility.setBean(bean, request);
 			request.setAttribute("nextListSize", next.size());
 
-			ServletUtility.forward(getView(), request, response);
 		} catch (ApplicationException e) {
 			e.printStackTrace();
 			return;
 		}
+		log.info("TimetableListCtl doPost Method Ended");
+		ServletUtility.forward(getView(), request, response);
 	}
 
+	/**
+	 * Returns the view for timetable list.
+	 * 
+	 * @return String view path
+	 */
 	@Override
 	protected String getView() {
 		return ORSView.TIMETABLE_LIST_VIEW;

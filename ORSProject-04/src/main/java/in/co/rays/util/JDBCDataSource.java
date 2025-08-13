@@ -9,15 +9,36 @@ import java.util.ResourceBundle;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
+/**
+ * JDBCDataSource is a utility class that manages database connections using
+ * C3P0 connection pooling.
+ * 
+ * It reads configuration from a resource bundle and provides methods to
+ * retrieve and close database connections and resources.
+ * 
+ * This class follows the Singleton design pattern.
+ * 
+ * @author Chetan Patidar
+ * @version 1.0
+ * @Copyright (c) Chetan Patidar
+ */
 public final class JDBCDataSource {
 
+	/**
+	 * Private constructor to prevent instantiation.
+	 */
 	private JDBCDataSource() {
-
 	}
 
 	private static JDBCDataSource dataSource = null;
 	private static ComboPooledDataSource cpds = null;
 
+	/**
+	 * Returns the singleton instance of JDBCDataSource. Initializes the C3P0
+	 * connection pool if not already initialized.
+	 * 
+	 * @return JDBCDataSource instance
+	 */
 	private static JDBCDataSource getInstance() {
 		if (dataSource == null) {
 
@@ -35,7 +56,6 @@ public final class JDBCDataSource {
 				dataSource.cpds.setMaxPoolSize(Integer.parseInt(rb.getString("maxPoolSize")));
 				dataSource.cpds.setMinPoolSize(Integer.parseInt(rb.getString("minPoolSize")));
 				dataSource.cpds.setMaxIdleTime(Integer.parseInt(rb.getString("timeout")));
-				;
 			} catch (PropertyVetoException e) {
 				e.printStackTrace();
 			}
@@ -44,6 +64,11 @@ public final class JDBCDataSource {
 		return dataSource;
 	}
 
+	/**
+	 * Returns a connection from the connection pool.
+	 * 
+	 * @return database connection or null if exception occurs
+	 */
 	public static Connection getConnection() {
 		try {
 			return getInstance().cpds.getConnection();
@@ -53,6 +78,11 @@ public final class JDBCDataSource {
 		}
 	}
 
+	/**
+	 * Closes the given database connection.
+	 * 
+	 * @param conn the connection to close
+	 */
 	public static void closeConnection(Connection conn) {
 		try {
 			conn.close();
@@ -61,6 +91,12 @@ public final class JDBCDataSource {
 		}
 	}
 
+	/**
+	 * Closes the given ResultSet and PreparedStatement.
+	 * 
+	 * @param rs    the ResultSet to close
+	 * @param pstmt the PreparedStatement to close
+	 */
 	public static void closeConnection(ResultSet rs, PreparedStatement pstmt) {
 		try {
 			if (rs != null) {

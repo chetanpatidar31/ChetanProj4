@@ -1,5 +1,12 @@
 package in.co.rays.controller;
 
+/**
+ * Contains ORS View and Controller URI
+ * 
+ * @author Chetan Patidar
+ * @version 1.0 Copyright (c) Chetan
+ */
+
 public interface ORSView {
 
 	public String APP_CONTEXT = "/ORSProject-04";
@@ -70,13 +77,13 @@ public interface ORSView {
 
 	public String FACULTY_LIST_CTL = APP_CONTEXT + "/ctl/FacultyListCtl";
 	public String FACULTY_LIST_VIEW = PAGE_FOLDER + "/FacultyListView.jsp";
-	
+
 	public String GET_MARKSHEET_CTL = APP_CONTEXT + "/ctl/GetMarksheetCtl";
 	public String GET_MARKSHEET_VIEW = PAGE_FOLDER + "/GetMarksheetView.jsp";
-	
+
 	public String MARKSHEET_MERIT_LIST_CTL = APP_CONTEXT + "/ctl/MarksheetMeritListCtl";
 	public String MARKSHEET_MERIT_LIST_VIEW = PAGE_FOLDER + "/MarksheetMeritListView.jsp";
-	
+
 	public String FORGET_PASSWORD_CTL = APP_CONTEXT + "/ForgetPasswordCtl";
 	public String FORGET_PASSWORD_VIEW = PAGE_FOLDER + "/ForgetPasswordView.jsp";
 
@@ -85,7 +92,7 @@ public interface ORSView {
 
 	public String MY_PROFILE_CTL = APP_CONTEXT + "/ctl/MyProfileCtl";
 	public String MY_PROFILE_VIEW = PAGE_FOLDER + "/MyProfileView.jsp";
-	
+
 	public String ERROR_CTL = APP_CONTEXT + "/ErrorCtl";
 	public String ERROR_VIEW = PAGE_FOLDER + "/ErrorView.jsp";
 

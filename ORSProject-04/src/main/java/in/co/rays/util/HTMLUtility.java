@@ -7,8 +7,24 @@ import java.util.Set;
 import in.co.rays.bean.DropdownListBean;
 import in.co.rays.model.RoleModel;
 
+/**
+ * HTML Utility class to produce HTML contents like Dropdown List.
+ * 
+ * @author Chetan Patidar
+ * @version 1.0
+ * @Copyright (c) Chetan Patidar
+ * 
+ */
 public class HTMLUtility {
 
+	/**
+	 * Create HTML SELECT list from MAP parameters values
+	 * 
+	 * @param name
+	 * @param selectedVal
+	 * @param map
+	 * @return
+	 */
 	public static String getList(String name, String selectedVal, HashMap<String, String> map) {
 
 		StringBuffer sb = new StringBuffer(
@@ -31,6 +47,14 @@ public class HTMLUtility {
 		return sb.toString();
 	}
 
+	/**
+	 * Create HTML SELECT List from List parameter
+	 * 
+	 * @param name
+	 * @param selectedVal
+	 * @param list
+	 * @return
+	 */
 	public static String getList(String name, String selectedVal, List list) {
 
 		List<DropdownListBean> dd = (List<DropdownListBean>) list;

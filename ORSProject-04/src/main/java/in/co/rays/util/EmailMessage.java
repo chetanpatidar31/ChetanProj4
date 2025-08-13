@@ -1,10 +1,31 @@
 package in.co.rays.util;
 
+/**
+ * Contains Email Message
+ *
+ * @author Chetan Patidar
+ * @version 1.0
+ * @Copyright (c) Chetan Patidar
+ *
+ */
 public class EmailMessage {
-	
+
+	/**
+	 * Contains comma separated TO addresses
+	 */
 	private String to;
+	/**
+	 * Contains message subject
+	 */
 	private String subject;
+	/**
+	 * Contains message
+	 */
 	private String message;
+
+	/**
+	 * Type of message whether it is Html or text, default is Text
+	 */
 	private int messageType = TEXT_MSG;
 
 	public static final int HTML_MSG = 1;
@@ -50,5 +71,5 @@ public class EmailMessage {
 	public int getMessageType() {
 		return messageType;
 	}
-	
+
 }

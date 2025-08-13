@@ -1,5 +1,12 @@
 package in.co.rays.bean;
-
+/**
+ * Subject JavaBean encapsulates Subject attributes
+ * 
+ * @author Chetan Patidar
+ * @version 1.0
+ * Copyright (c) Chetan Patidar
+ * 
+ */
 public class SubjectBean extends BaseBean {
 	private String name;
 	private long courseId;

@@ -13,6 +13,13 @@ import in.co.rays.util.DataUtility;
 import in.co.rays.util.DataValidator;
 import in.co.rays.util.ServletUtility;
 
+/**
+ * Base controller class of project. It contain (1) Generic operations (2)
+ * Generic constants (3) Generic work flow
+ * 
+ * @author Chetan Patidar
+ * @version 1.0 Copyright (c) Chetan
+ */
 public abstract class BaseCtl extends HttpServlet {
 	// Constants for different operations
 	public static final String OP_SAVE = "Save";
@@ -34,18 +41,44 @@ public abstract class BaseCtl extends HttpServlet {
 	public static final String MSG_SUCCESS = "success";
 	public static final String MSG_ERROR = "error";
 
+	/**
+	 * Validates input data entered by User
+	 * 
+	 * @param request
+	 * @return
+	 */
 	protected boolean validate(HttpServletRequest request) {
 		return true;
 	}
 
+	/**
+	 * Loads pre-required data like dropdown lists, etc. Override in subclasses to
+	 * preload specific data.
+	 *
+	 * @param request HttpServletRequest object
+	 */
 	protected void preload(HttpServletRequest request) {
 
 	}
 
+	/**
+	 * Populates a bean from the request parameters. To be overridden by child
+	 * controllers to return specific beans.
+	 *
+	 * @param request HttpServletRequest object
+	 * @return BaseBean populated bean object
+	 */
 	protected BaseBean populateBean(HttpServletRequest request) {
 		return null;
 	}
 
+	/**
+	 * Populates Generic attributes in DTO
+	 * 
+	 * @param dto
+	 * @param request
+	 * @return
+	 */
 	protected BaseBean populateDTO(BaseBean dto, HttpServletRequest request) {
 		String createdBy = request.getParameter("modifiedBy");
 		String modifiedBy = null;
@@ -77,9 +110,18 @@ public abstract class BaseCtl extends HttpServlet {
 		return dto;
 	}
 
+	/**
+	 * Overrides the default service() method to apply validation and preload logic.
+	 *
+	 * @param request  HttpServletRequest object
+	 * @param response HttpServletResponse object
+	 * @throws ServletException in case of servlet failure
+	 * @throws IOException      in case of I/O failure
+	 */
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		System.out.println("BaseCtl service Started.");
 
 		preload(request);
 
@@ -94,10 +136,15 @@ public abstract class BaseCtl extends HttpServlet {
 				return;
 			}
 		}
-
+		System.out.println("BaseCtl service Ended.  Method : " + request.getMethod());
 		super.service(request, response);
 	}
 
+	/**
+	 * Returns the VIEW page of this Controller
+	 * 
+	 * @return
+	 */
 	protected abstract String getView();
 
 }

@@ -8,6 +8,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import in.co.rays.bean.BaseBean;
 import in.co.rays.bean.StudentBean;
 import in.co.rays.exception.ApplicationException;
@@ -16,11 +18,26 @@ import in.co.rays.util.DataUtility;
 import in.co.rays.util.PropertyReader;
 import in.co.rays.util.ServletUtility;
 
+/**
+ * Student List Controller. Handles search, pagination, deletion, and
+ * redirection operations for student list view.
+ * 
+ * @author Chetan Patidar
+ */
 @WebServlet(name = "StudentListCtl", urlPatterns = { "/ctl/StudentListCtl" })
 public class StudentListCtl extends BaseCtl {
 
+	Logger log = Logger.getLogger(StudentListCtl.class);
+
+	/**
+	 * Populates StudentBean from request parameters.
+	 *
+	 * @param request HttpServletRequest
+	 * @return populated StudentBean
+	 */
 	@Override
 	protected BaseBean populateBean(HttpServletRequest request) {
+		log.info("StudentListCtl populateBean Method Started");
 
 		StudentBean bean = new StudentBean();
 
@@ -28,12 +45,22 @@ public class StudentListCtl extends BaseCtl {
 		bean.setLastName(DataUtility.getString(request.getParameter("lastName")));
 		bean.setEmail(DataUtility.getString(request.getParameter("email")));
 
+		log.info("StudentListCtl populateBean Method Ended");
 		return bean;
 	}
 
+	/**
+	 * Handles GET requests to show student list.
+	 *
+	 * @param request  HttpServletRequest
+	 * @param response HttpServletResponse
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		log.info("StudentListCtl doGet Method Started");
 
 		int pageNo = 1;
 		int pageSize = DataUtility.getInt(PropertyReader.getValue("page.size"));
@@ -60,12 +87,23 @@ public class StudentListCtl extends BaseCtl {
 			return;
 		}
 
+		log.info("StudentListCtl doGet Method Ended");
 		ServletUtility.forward(getView(), request, response);
 	}
 
+	/**
+	 * Handles POST requests for search, pagination, delete, and redirection
+	 * operations.
+	 *
+	 * @param request  HttpServletRequest
+	 * @param response HttpServletResponse
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		log.info("StudentListCtl doPost Method Started");
 
 		List list = null;
 		List next = null;
@@ -101,20 +139,20 @@ public class StudentListCtl extends BaseCtl {
 						model.delete(deleteBean);
 						ServletUtility.setSuccessMessage("Student is deleted succesfully", request);
 					}
-				}else {
+				} else {
 					ServletUtility.setErrorMessage("Select atleast one record", request);
 				}
-			}else if (OP_NEW.equalsIgnoreCase(op)) {
+			} else if (OP_NEW.equalsIgnoreCase(op)) {
 				ServletUtility.redirect(ORSView.STUDENT_CTL, request, response);
 				return;
-			}else if (OP_RESET.equalsIgnoreCase(op)) {
+			} else if (OP_RESET.equalsIgnoreCase(op)) {
 				ServletUtility.redirect(ORSView.STUDENT_LIST_CTL, request, response);
 				return;
-			}else if (OP_BACK.equalsIgnoreCase(op)) {
+			} else if (OP_BACK.equalsIgnoreCase(op)) {
 				ServletUtility.redirect(ORSView.STUDENT_LIST_CTL, request, response);
 				return;
 			}
-			
+
 			list = model.search(bean, pageNo, pageSize);
 			next = model.search(bean, pageNo + 1, pageSize);
 
@@ -128,14 +166,19 @@ public class StudentListCtl extends BaseCtl {
 			ServletUtility.setBean(bean, request);
 			request.setAttribute("nextListSize", next.size());
 
-			ServletUtility.forward(getView(), request, response);
-
 		} catch (ApplicationException e) {
 			e.printStackTrace();
 			return;
 		}
+		log.info("StudentListCtl doPost Method Ended");
+		ServletUtility.forward(getView(), request, response);
 	}
 
+	/**
+	 * Returns the view for student list.
+	 *
+	 * @return view path for student list
+	 */
 	@Override
 	protected String getView() {
 		return ORSView.STUDENT_LIST_VIEW;

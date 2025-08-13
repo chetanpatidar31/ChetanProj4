@@ -4,16 +4,34 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Data Utility class to format data from one format to another
+ *
+ * @author Chetan Patidar
+ * @version 1.0
+ * @Copyright (c) Chetan Patidar
+ */
 public class DataUtility {
-	
+	  /**
+     * Application Date Format
+     */
 	public static final String APP_DATE_FORMAT = "dd-MM-yyyy";
 
 	public static final String APP_TIME_FORMAT = "dd-MM-yyyy HH:mm:ss";
 
+	 /**
+     * Date formatter
+     */
 	private static final SimpleDateFormat formatter = new SimpleDateFormat(APP_DATE_FORMAT);
 
 	private static final SimpleDateFormat timeFormatter = new SimpleDateFormat(APP_TIME_FORMAT);
 
+	 /**
+     * Trims and trailing and leading spaces of a String
+     *
+     * @param val
+     * @return
+     */
 	public static String getString(String val) {
 		if (DataValidator.isNotNull(val)) {
 			return val.trim();
@@ -22,6 +40,12 @@ public class DataUtility {
 		}
 	}
 
+	 /**
+     * Converts and Object to String
+     *
+     * @param val
+     * @return
+     */
 	public static String getStringData(Object val) {
 		if (val != null) {
 			return val.toString();
@@ -30,6 +54,12 @@ public class DataUtility {
 		}
 	}
 
+	 /**
+     * Converts String into Integer
+     *
+     * @param val
+     * @return
+     */
 	public static int getInt(String val) {
 		if (DataValidator.isInteger(val)) {
 			return Integer.parseInt(val);
@@ -39,6 +69,12 @@ public class DataUtility {
 		
 	}
 
+	/**
+     * Converts String into Long
+     *
+     * @param val
+     * @return
+     */
 	public static long getLong(String val) {
 		if (DataValidator.isLong(val)) {
 			return Long.parseLong(val);
@@ -47,6 +83,12 @@ public class DataUtility {
 		}
 	}
 
+	  /**
+     * Converts String into Date
+     *
+     * @param val
+     * @return
+     */
 	public static Date getDate(String val) {
 		Date date = null;
 		try {
@@ -57,6 +99,12 @@ public class DataUtility {
 		return date;
 	}
 
+	  /**
+     * Converts Date into String
+     *
+     * @param date
+     * @return
+     */
 	public static String getDateString(Date date) {
 		try {
 			return formatter.format(date);
@@ -65,10 +113,23 @@ public class DataUtility {
 		return "";
 	}
 
+	/**
+     * Gets date after n number of days
+     *
+     * @param date
+     * @param day
+     * @return
+     */
 	public static Date getDate(Date date, int day) {
 		return null;
 	}
 
+	 /**
+     * Converts String into Time
+     *
+     * @param val
+     * @return
+     */
 	public static Timestamp getTimestamp(String val) {
 
 		Timestamp timeStamp = null;
@@ -141,38 +202,28 @@ public class DataUtility {
 		// Test getDateString
 		System.out.println("\ngetDateString Test:");
 		System.out.println("Date to String: '" + getDateString(new Date()) + "'");
-//
-//		// Test getTimestamp (String)
-//		System.out.println("\ngetTimestamp(String) Test:");
-//		String timestampStr = "10/15/2024 10:30:45";
-//		Timestamp timestamp = getTimestamp(timestampStr);
-//		System.out.println("String to Timestamp: '" + timestampStr + "' -> " + timestamp);
-//
-//		// Test getTimestamp (long)
-//		System.out.println("\ngetTimestamp(long) Test:");
-//		long currentTimeMillis = System.currentTimeMillis();
-//		Timestamp ts = getTimestamp(currentTimeMillis);
-//		System.out.println("Current Time Millis to Timestamp: '" + currentTimeMillis + "' -> " + ts);
-//
-//		// Test getCurrentTimestamp
-//		System.out.println("\ngetCurrentTimestamp Test:");
-//		Timestamp currentTimestamp = getCurrentTimestamp();
-//		System.out.println("Current Timestamp: " + currentTimestamp);
-//
-//		// Test getTimestamp(Timestamp)
-//		System.out.println("\ngetTimestamp(Timestamp) Test:");
-//		System.out.println("Timestamp to long: " + getTimestamp(currentTimestamp));
-		
-		//----------------------------------------
-		// Test double
-				System.out.println("\n-------------------double test------------------------");
-				
 
-				// Test getDate
-				System.out.println("\ngetDate Test:");
-				String dateStr1 = "18-05-2025";
-				Date date1 = getDate(dateStr);
-				System.out.println("String to Date: '" + dateStr1 + "' -> " + date1);
+		// Test getTimestamp (String)
+		System.out.println("\ngetTimestamp(String) Test:");
+		String timestampStr = "10/15/2024 10:30:45";
+		Timestamp timestamp = getTimestamp(timestampStr);
+		System.out.println("String to Timestamp: '" + timestampStr + "' -> " + timestamp);
+
+		// Test getTimestamp (long)
+		System.out.println("\ngetTimestamp(long) Test:");
+		long currentTimeMillis = System.currentTimeMillis();
+		Timestamp ts = getTimestamp(currentTimeMillis);
+		System.out.println("Current Time Millis to Timestamp: '" + currentTimeMillis + "' -> " + ts);
+
+		// Test getCurrentTimestamp
+		System.out.println("\ngetCurrentTimestamp Test:");
+		Timestamp currentTimestamp = getCurrentTimestamp();
+		System.out.println("Current Timestamp: " + currentTimestamp);
+
+		// Test getTimestamp(Timestamp)
+		System.out.println("\ngetTimestamp(Timestamp) Test:");
+		System.out.println("Timestamp to long: " + getTimestamp(currentTimestamp));
+		
 	}
 
 }

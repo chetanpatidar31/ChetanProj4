@@ -2,8 +2,22 @@ package in.co.rays.util;
 
 import java.util.HashMap;
 
+/**
+ * Class that build Application Email messages
+ *
+ * @author Chetan Patidar
+ * @version 1.0
+ * @Copyright (c) Chetan Patidar
+ *
+ */
 public class EmailBuilder {
 
+	/**
+	 * Returns Successful User Registration Message
+	 *
+	 * @param map : Message parameters
+	 * @return
+	 */
 	public static String getUserRegistrationMessage(HashMap<String, String> map) {
 		StringBuilder msg = new StringBuilder();
 		msg.append("<HTML><BODY>");
@@ -17,6 +31,13 @@ public class EmailBuilder {
 		return msg.toString();
 	}
 
+	/**
+	 * Returns Email message of Forget Password
+	 *
+	 * @param map : params
+	 * @return
+	 */
+
 	public static String getForgetPasswordMessage(HashMap<String, String> map) {
 		StringBuilder msg = new StringBuilder();
 		msg.append("<HTML><BODY>");
@@ -29,6 +50,12 @@ public class EmailBuilder {
 		return msg.toString();
 	}
 
+	/**
+	 * Returns Email message of Change Password
+	 *
+	 * @param map
+	 * @return
+	 */
 	public static String getChangePasswordMessage(HashMap<String, String> map) {
 		StringBuilder msg = new StringBuilder();
 		msg.append("<HTML><BODY>");
@@ -41,5 +68,5 @@ public class EmailBuilder {
 		msg.append("</BODY></HTML>");
 		return msg.toString();
 	}
-	
+
 }

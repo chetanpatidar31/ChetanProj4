@@ -8,6 +8,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import in.co.rays.bean.BaseBean;
 import in.co.rays.bean.CollegeBean;
 import in.co.rays.exception.ApplicationException;
@@ -16,11 +18,26 @@ import in.co.rays.util.DataUtility;
 import in.co.rays.util.PropertyReader;
 import in.co.rays.util.ServletUtility;
 
+/**
+ * CollegeListCtl servlet class to handle operations like searching, listing,
+ * deleting, and paginating College records.
+ * 
+ * @author Chetan Patidar
+ */
 @WebServlet(name = "CollegeListCtl", urlPatterns = "/ctl/CollegeListCtl")
 public class CollegeListCtl extends BaseCtl {
 
+	Logger log = Logger.getLogger(CollegeListCtl.class);
+
+	/**
+	 * Loads list of all colleges for preload data in view
+	 * 
+	 * @param request the HttpServletRequest
+	 */
 	@Override
 	protected void preload(HttpServletRequest request) {
+		log.info("CollegeListCtl preload Method Started");
+
 		CollegeModel model = new CollegeModel();
 		try {
 			List<CollegeBean> collegeList = model.list();
@@ -29,21 +46,40 @@ public class CollegeListCtl extends BaseCtl {
 		} catch (ApplicationException e) {
 			e.printStackTrace();
 		}
+		log.info("CollegeListCtl preload Method Ended");
 	}
 
+	/**
+	 * Populates CollegeBean object from request parameters
+	 * 
+	 * @param request the HttpServletRequest
+	 * @return CollegeBean object with populated data
+	 */
 	@Override
 	protected BaseBean populateBean(HttpServletRequest request) {
+		log.info("CollegeListCtl populateBean Method Started");
+
 		CollegeBean bean = new CollegeBean();
 
 		bean.setId(DataUtility.getLong(request.getParameter("collegeId")));
 		bean.setCity(DataUtility.getString(request.getParameter("city")));
 
+		log.info("CollegeListCtl populateBean Method Ended");
 		return bean;
 	}
 
+	/**
+	 * Handles HTTP GET requests for displaying college list
+	 * 
+	 * @param request  the HttpServletRequest
+	 * @param response the HttpServletResponse
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		log.info("CollegeListCtl doGet Method Started");
 
 		int pageNo = 1;
 		int pageSize = DataUtility.getInt(PropertyReader.getValue("page.size"));
@@ -63,18 +99,28 @@ public class CollegeListCtl extends BaseCtl {
 			ServletUtility.setBean(bean, request);
 			request.setAttribute("nextListSize", next.size());
 
-			ServletUtility.forward(getView(), request, response);
-
 		} catch (ApplicationException e) {
 			e.printStackTrace();
 			return;
 		}
+		log.info("CollegeListCtl doGet Method Ended");
+		ServletUtility.forward(getView(), request, response);
 
 	}
 
+	/**
+	 * Handles HTTP POST requests for operations like Search, Delete, New, Reset,
+	 * etc.
+	 * 
+	 * @param request  the HttpServletRequest
+	 * @param response the HttpServletResponse
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		log.info("CollegeListCtl doPost Method Started");
 
 		List list = null;
 		List next = null;
@@ -136,13 +182,19 @@ public class CollegeListCtl extends BaseCtl {
 			ServletUtility.setBean(bean, request);
 			request.setAttribute("nextListSize", next.size());
 
-			ServletUtility.forward(getView(), request, response);
 		} catch (ApplicationException e) {
 			e.printStackTrace();
 			return;
 		}
+		log.info("CollegeListCtl doPost Method Ended");
+		ServletUtility.forward(getView(), request, response);
 	}
 
+	/**
+	 * Returns the view page for this controller
+	 * 
+	 * @return view page path
+	 */
 	@Override
 	protected String getView() {
 		return ORSView.COLLEGE_LIST_VIEW;

@@ -8,6 +8,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import in.co.rays.bean.BaseBean;
 import in.co.rays.bean.CollegeBean;
 import in.co.rays.bean.CourseBean;
@@ -24,11 +26,30 @@ import in.co.rays.util.DataValidator;
 import in.co.rays.util.PropertyReader;
 import in.co.rays.util.ServletUtility;
 
+/**
+ * FacultyCtl controller to handle Faculty data operations. Provides
+ * functionality to add, update, validate, and view faculty data.
+ * 
+ * Preloads required data such as college, course, and subject lists. Handles
+ * form validation and submission logic for faculty management.
+ * 
+ * @author Chetan Patidar
+ * @version 1.0
+ */
 public class FacultyCtl extends BaseCtl {
+
+	Logger log = Logger.getLogger(FacultyCtl.class);
+
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Loads data required for the Faculty form dropdowns.
+	 * 
+	 * @param request HttpServletRequest object
+	 */
 	@Override
 	protected void preload(HttpServletRequest request) {
+		log.info("FacultyCtl preload Method Started");
 
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("Male", "Male");
@@ -54,11 +75,18 @@ public class FacultyCtl extends BaseCtl {
 			e.printStackTrace();
 			return;
 		}
-
+		log.info("FacultyCtl preload Method Ended");
 	}
 
+	/**
+	 * Validates input data from Faculty form.
+	 * 
+	 * @param request HttpServletRequest object
+	 * @return boolean true if data is valid, false otherwise
+	 */
 	@Override
 	protected boolean validate(HttpServletRequest request) {
+		log.info("FacultyCtl validate Method Started");
 
 		boolean isValid = true;
 
@@ -125,11 +153,19 @@ public class FacultyCtl extends BaseCtl {
 			isValid = false;
 		}
 
+		log.info("FacultyCtl validate Method Ended");
 		return isValid;
 	}
 
+	/**
+	 * Populates FacultyBean with form data.
+	 * 
+	 * @param request HttpServletRequest object
+	 * @return populated FacultyBean object
+	 */
 	@Override
 	protected BaseBean populateBean(HttpServletRequest request) {
+		log.info("FacultyCtl populateBean Method Started");
 
 		FacultyBean bean = new FacultyBean();
 
@@ -146,11 +182,21 @@ public class FacultyCtl extends BaseCtl {
 
 		populateDTO(bean, request);
 
+		log.info("FacultyCtl populateBean Method Ended");
 		return bean;
 	}
 
+	/**
+	 * Handles GET request to load a faculty record for update.
+	 * 
+	 * @param request  HttpServletRequest object
+	 * @param response HttpServletResponse object
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		log.info("FacultyCtl doGet Method Started");
 
 		long id = DataUtility.getLong(request.getParameter("id"));
 
@@ -165,11 +211,22 @@ public class FacultyCtl extends BaseCtl {
 			}
 		}
 
+		log.info("FacultyCtl doGet Method Ended");
 		ServletUtility.forward(getView(), request, response);
 	}
 
+	/**
+	 * Handles POST request for form submission for operations like Save, Update,
+	 * Reset and Cancel.
+	 * 
+	 * @param request  HttpServletRequest object
+	 * @param response HttpServletResponse object
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		log.info("FacultyCtl doPost Method Started");
 
 		String op = DataUtility.getString(request.getParameter("operation"));
 
@@ -209,9 +266,15 @@ public class FacultyCtl extends BaseCtl {
 			ServletUtility.redirect(ORSView.FACULTY_CTL, request, response);
 			return;
 		}
+		log.info("FacultyCtl doPost Method Ended");
 		ServletUtility.forward(getView(), request, response);
 	}
 
+	/**
+	 * Returns the view page for Faculty form.
+	 * 
+	 * @return String path to the Faculty view JSP
+	 */
 	@Override
 	protected String getView() {
 		return ORSView.FACULTY_VIEW;

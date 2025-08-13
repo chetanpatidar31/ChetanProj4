@@ -1,6 +1,14 @@
 package in.co.rays.bean;
 
-public class CollegeBean extends BaseBean{
+/**
+ * College JavaBean encapsulates College attributes
+ * 
+ * @author Chetan Patidar
+ * @version 1.0 Copyright (c) Chetan Patidar
+ * 
+ */
+
+public class CollegeBean extends BaseBean {
 	private String name;
 	private String address;
 	private String state;

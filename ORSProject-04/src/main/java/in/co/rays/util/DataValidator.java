@@ -3,8 +3,21 @@ package in.co.rays.util;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * This class validates input data
+ * 
+ * @author Chetan Patidar
+ * @version 1.0
+ * @Copyright (c) Chetan Patidar
+ */
 public class DataValidator {
 
+	/**
+	 * Checks if value is Null
+	 * 
+	 * @param val
+	 * @return
+	 */
 	public static boolean isNull(String val) {
 		if (val == null || val.trim().length() == 0) {
 			return true;
@@ -13,10 +26,22 @@ public class DataValidator {
 		}
 	}
 
+	/**
+	 * Checks if value is NOT Null
+	 * 
+	 * @param val
+	 * @return
+	 */
 	public static boolean isNotNull(String val) {
 		return !isNull(val);
 	}
 
+	/**
+	 * Checks if value is an Integer
+	 * 
+	 * @param val
+	 * @return
+	 */
 	public static boolean isInteger(String val) {
 
 		if (isNotNull(val)) {
@@ -31,6 +56,12 @@ public class DataValidator {
 		}
 	}
 
+	/**
+	 * Checks if value is Long
+	 * 
+	 * @param val
+	 * @return
+	 */
 	public static boolean isLong(String val) {
 		if (isNotNull(val)) {
 			try {
@@ -44,6 +75,12 @@ public class DataValidator {
 		}
 	}
 
+	/**
+	 * Checks if value is valid Email ID
+	 * 
+	 * @param val
+	 * @return
+	 */
 	public static boolean isEmail(String val) {
 
 		String emailreg = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
@@ -60,6 +97,12 @@ public class DataValidator {
 		}
 	}
 
+	/**
+	 * Checks if value is valid Name
+	 * 
+	 * @param val
+	 * @return
+	 */
 	public static boolean isName(String val) {
 
 		String namereg = "^[^-\\s][\\p{L} .'-]+$";
@@ -75,6 +118,12 @@ public class DataValidator {
 		}
 	}
 
+	/**
+	 * Checks if value is valid Roll No
+	 * 
+	 * @param val
+	 * @return
+	 */
 	public static boolean isRollNo(String val) {
 
 		String rollreg = "[a-zA-Z]{2}[0-9]{3}";
@@ -90,6 +139,12 @@ public class DataValidator {
 		}
 	}
 
+	/**
+	 * Checks if value is valid Password
+	 * 
+	 * @param val
+	 * @return
+	 */
 	public static boolean isPassword(String val) {
 
 		String passreg = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,12}";
@@ -106,6 +161,12 @@ public class DataValidator {
 		}
 	}
 
+	/**
+	 * Checks if value of Password is in between 8 and 12 characters
+	 * 
+	 * @param val
+	 * @return
+	 */
 	public static boolean isPasswordLength(String val) {
 
 		if (isNotNull(val) && val.length() >= 8 && val.length() <= 12) {
@@ -115,6 +176,12 @@ public class DataValidator {
 		}
 	}
 
+	/**
+	 * Checks if value is valid Phone No.
+	 * 
+	 * @param val
+	 * @return
+	 */
 	public static boolean isPhoneNo(String val) {
 
 		String phonereg = "^[6-9][0-9]{9}$";
@@ -131,6 +198,12 @@ public class DataValidator {
 		}
 	}
 
+	/**
+	 * Checks if value of Mobile No Length is 10
+	 * 
+	 * @param val
+	 * @return
+	 */
 	public static boolean isPhoneLength(String val) {
 
 		if (isNotNull(val) && val.length() == 10) {
@@ -140,6 +213,12 @@ public class DataValidator {
 		}
 	}
 
+	/**
+	 * Checks if value is Date
+	 * 
+	 * @param val
+	 * @return
+	 */
 	public static boolean isDate(String val) {
 
 		Date d = null;
@@ -149,6 +228,12 @@ public class DataValidator {
 		return d != null;
 	}
 
+	/**
+	 * Checks if Date is on Sunday
+	 * 
+	 * @param val
+	 * @return
+	 */
 	public static boolean isSunday(String val) {
 
 		Calendar cal = Calendar.getInstance();
@@ -162,6 +247,11 @@ public class DataValidator {
 		}
 	}
 
+	/**
+	 * Test above methods
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 
 		// Test isNull and isNotNull
@@ -226,5 +316,5 @@ public class DataValidator {
 		System.out.println("Date on Sunday: '06-07-2025' -> " + isSunday("06-07-2025"));
 		System.out.println("Date not on Sunday: '02-07-2025' -> " + isSunday("02-07-2025"));
 	}
-	
+
 }

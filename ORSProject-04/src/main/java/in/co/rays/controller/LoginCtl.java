@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
 import in.co.rays.bean.BaseBean;
 import in.co.rays.bean.RoleBean;
 import in.co.rays.bean.UserBean;
@@ -19,15 +21,29 @@ import in.co.rays.util.DataValidator;
 import in.co.rays.util.PropertyReader;
 import in.co.rays.util.ServletUtility;
 
+/**
+ * Controller to handle Login and Logout functionality. Handles user
+ * authentication and session management.
+ * 
+ * @author Chetan Patidar
+ */
 @WebServlet(name = "LoginCtl", urlPatterns = { "/LoginCtl" })
 public class LoginCtl extends BaseCtl {
+
+	Logger log = Logger.getLogger(LoginCtl.class);
 
 	public static final String OP_SIGN_IN = "Sign in";
 	public static final String OP_SIGN_UP = "Sign up";
 
+	/**
+	 * Validates login form input parameters.
+	 *
+	 * @param request HttpServletRequest object
+	 * @return true if data is valid, false otherwise
+	 */
 	@Override
 	protected boolean validate(HttpServletRequest request) {
-
+		log.info("LoginCtl validate Method Started");
 		boolean isValid = true;
 
 		String op = request.getParameter("operation");
@@ -48,24 +64,42 @@ public class LoginCtl extends BaseCtl {
 			request.setAttribute("password", PropertyReader.getValue("error.require", "Password"));
 			isValid = false;
 		}
-
+		log.info("LoginCtl validate Method Ended");
 		return isValid;
 	}
 
+	/**
+	 * Populates UserBean from request parameters.
+	 *
+	 * @param request HttpServletRequest object
+	 * @return populated UserBean object
+	 */
 	@Override
 	protected BaseBean populateBean(HttpServletRequest request) {
+
+		log.info("LoginCtl populateBean Method Started");
 
 		UserBean bean = new UserBean();
 		bean.setId(DataUtility.getLong(request.getParameter("id")));
 		bean.setLogin(DataUtility.getString(request.getParameter("login")));
 		bean.setPassword(DataUtility.getString(request.getParameter("password")));
 
+		log.info("LoginCtl populateBean Method Ended");
 		return bean;
 	}
 
+	/**
+	 * Handles GET requests. Used for logout operation.
+	 *
+	 * @param request  HttpServletRequest object
+	 * @param response HttpServletResponse object
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		log.info("LoginCtl doGet Method Started");
 
 		HttpSession session = request.getSession();
 
@@ -77,12 +111,22 @@ public class LoginCtl extends BaseCtl {
 			ServletUtility.forward(getView(), request, response);
 			return;
 		}
+		log.info("LoginCtl doGet Method Ended");
 		ServletUtility.forward(getView(), request, response);
 	}
 
+	/**
+	 * Handles POST requests for login and registration redirection.
+	 *
+	 * @param request  HttpServletRequest object
+	 * @param response HttpServletResponse object
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		log.info("LoginCtl doPost Method Started");
 
 		HttpSession session = request.getSession();
 
@@ -131,9 +175,15 @@ public class LoginCtl extends BaseCtl {
 
 		}
 
+		log.info("LoginCtl doPost Method Ended");
 		ServletUtility.forward(getView(), request, response);
 	}
 
+	/**
+	 * Returns the view name for the login page.
+	 *
+	 * @return view path of login
+	 */
 	@Override
 	protected String getView() {
 		return ORSView.LOGIN_VIEW;

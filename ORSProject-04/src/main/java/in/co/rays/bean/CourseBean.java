@@ -1,6 +1,13 @@
 package in.co.rays.bean;
 
-public class CourseBean extends BaseBean{
+/**
+ * Course JavaBean encapsulates Course attributes
+ * 
+ * @author Chetan Patidar
+ * @version 1.0 Copyright (c) Chetan Patidar
+ * 
+ */
+public class CourseBean extends BaseBean {
 	private String name;
 	private String duration;
 	private String description;

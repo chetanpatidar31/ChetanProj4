@@ -1,5 +1,12 @@
 package in.co.rays.bean;
-
+/**
+ * Marksheet JavaBean encapsulates Marksheet attributes
+ * 
+ * @author Chetan Patidar
+ * @version 1.0
+ * Copyright (c) Chetan Patidar
+ * 
+ */
 public class MarksheetBean extends BaseBean {
 
 	private String rollNo;

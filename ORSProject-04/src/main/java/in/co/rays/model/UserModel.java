@@ -28,20 +28,20 @@ import in.co.rays.util.JDBCDataSource;
  * operations like registration, password change, and password recovery.
  * 
  * @author Chetan Patidar
- * @version 1.0
+ * @version 1.0 copyright (c) Chetan
  */
 public class UserModel {
-	
+
 	public static Logger log = Logger.getLogger(UserModel.class);
 
 	/**
 	 * Returns the next primary key for User table.
 	 *
 	 * @return next primary key
-	 * @throws DatabaseException if any database error occurs
+	 * @throws ApplicationException if any database error occurs
 	 */
 	public int nextPk() throws ApplicationException {
-		log.debug("UserModel nextPk started");
+		log.info("UserModel nextPk started");
 		int pk = 0;
 		Connection conn = null;
 		try {
@@ -57,7 +57,7 @@ public class UserModel {
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
-		log.debug("UserModel nextPk ended");
+		log.info("UserModel nextPk ended");
 		return pk + 1;
 	}
 
@@ -70,6 +70,7 @@ public class UserModel {
 	 * @throws DuplicateRecordException if user login already exists
 	 */
 	public long add(UserBean bean) throws ApplicationException, DuplicateRecordException {
+		log.info("UserModel add Started");
 
 		UserBean existBean = findByLogin(bean.getLogin());
 
@@ -113,6 +114,7 @@ public class UserModel {
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
+		log.info("UserModel add Ended");
 		return pk;
 	}
 
@@ -124,6 +126,8 @@ public class UserModel {
 	 * @throws DuplicateRecordException if updated login already exists
 	 */
 	public void update(UserBean bean) throws ApplicationException, DuplicateRecordException {
+		log.info("UserModel update Started");
+
 		UserBean existBean = findByLogin(bean.getLogin());
 
 		if (existBean != null && existBean.getId() != bean.getId()) {
@@ -166,6 +170,7 @@ public class UserModel {
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
+		log.info("UserModel update Ended");
 	}
 
 	/**
@@ -175,6 +180,8 @@ public class UserModel {
 	 * @throws ApplicationException if application-level error occurs
 	 */
 	public void delete(UserBean bean) throws ApplicationException {
+		log.info("UserModel delete Started");
+
 		Connection conn = null;
 		try {
 			conn = JDBCDataSource.getConnection();
@@ -199,6 +206,7 @@ public class UserModel {
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
+		log.info("UserModel delete Ended");
 	}
 
 	/**
@@ -209,6 +217,8 @@ public class UserModel {
 	 * @throws ApplicationException if database error occurs
 	 */
 	public UserBean findByPk(long id) throws ApplicationException {
+		log.info("UserModel findByPk Started");
+
 		UserBean bean = null;
 		Connection conn = null;
 
@@ -242,7 +252,7 @@ public class UserModel {
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
-
+		log.info("UserModel findByPk Ended");
 		return bean;
 	}
 
@@ -255,6 +265,8 @@ public class UserModel {
 	 * @throws ApplicationException if database error occurs
 	 */
 	public UserBean authenticate(String login, String password) throws ApplicationException {
+		log.info("UserModel authenticate Started");
+
 		UserBean bean = null;
 		Connection conn = null;
 
@@ -289,7 +301,7 @@ public class UserModel {
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
-
+		log.info("UserModel authenticate Ended");
 		return bean;
 	}
 
@@ -301,6 +313,8 @@ public class UserModel {
 	 * @throws ApplicationException if database error occurs
 	 */
 	public UserBean findByLogin(String login) throws ApplicationException {
+		log.info("UserModel findByLogin Started");
+
 		Connection conn = null;
 		UserBean bean = null;
 
@@ -335,6 +349,7 @@ public class UserModel {
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
+		log.info("UserModel findByLogin Ended");
 		return bean;
 	}
 
@@ -345,6 +360,7 @@ public class UserModel {
 	 * @throws ApplicationException if database error occurs
 	 */
 	public List<UserBean> list() throws ApplicationException {
+		log.info("UserModel list");
 		return search(null, 0, 0);
 	}
 
@@ -358,6 +374,8 @@ public class UserModel {
 	 * @throws ApplicationException if database error occurs
 	 */
 	public List<UserBean> search(UserBean bean, int pageNo, int pageSize) throws ApplicationException {
+		log.info("UserModel search Started");
+
 		StringBuffer sql = new StringBuffer("select * from st_user where 1=1");
 
 		if (bean != null) {
@@ -366,7 +384,6 @@ public class UserModel {
 			}
 
 			if (bean.getDob() != null) {
-				System.out.println("search method in if of dob");
 				sql.append(" and dob = '" + new java.sql.Date(bean.getDob().getTime()) + "'");
 			}
 
@@ -419,6 +436,7 @@ public class UserModel {
 		} finally {
 			JDBCDataSource.closeConnection(conn);
 		}
+		log.info("UserModel search Ended");
 		return list;
 	}
 
@@ -435,6 +453,7 @@ public class UserModel {
 	 */
 	public boolean changePassword(Long id, String oldPassword, String newPassword)
 			throws ApplicationException, RecordNotFoundException {
+		log.info("UserModel changePassword Started");
 
 		boolean flag = false;
 
@@ -468,6 +487,7 @@ public class UserModel {
 
 		EmailUtility.sendMail(msg);
 
+		log.info("UserModel changePassword Ended");
 		return flag;
 	}
 
@@ -480,6 +500,7 @@ public class UserModel {
 	 * @throws RecordNotFoundException if email/login doesn't exist
 	 */
 	public boolean forgetPassword(String login) throws ApplicationException, RecordNotFoundException {
+		log.info("UserModel forgetPassword Started");
 
 		boolean flag = true;
 
@@ -505,6 +526,7 @@ public class UserModel {
 
 		EmailUtility.sendMail(msg);
 
+		log.info("UserModel forgetPassword Ended");
 		return flag;
 	}
 
@@ -517,6 +539,7 @@ public class UserModel {
 	 * @throws DuplicateRecordException if login already exists
 	 */
 	public long registerUser(UserBean bean) throws ApplicationException, DuplicateRecordException {
+		log.info("UserModel registerUser Started");
 
 		long pk = add(bean);
 
@@ -534,6 +557,7 @@ public class UserModel {
 
 		EmailUtility.sendMail(msg);
 
+		log.info("UserModel registerUser Ended");
 		return pk;
 	}
 

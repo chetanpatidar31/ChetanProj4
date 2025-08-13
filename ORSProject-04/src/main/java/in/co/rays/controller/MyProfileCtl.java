@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
 import in.co.rays.bean.BaseBean;
 import in.co.rays.bean.UserBean;
 import in.co.rays.exception.ApplicationException;
@@ -18,13 +20,28 @@ import in.co.rays.util.DataValidator;
 import in.co.rays.util.PropertyReader;
 import in.co.rays.util.ServletUtility;
 
+/**
+ * Controller to handle My Profile functionality of a user. Allows viewing and
+ * updating user profile data.
+ * 
+ * @author Chetan Patidar
+ */
 @WebServlet(name = "MyProfileCtl", urlPatterns = { "/ctl/MyProfileCtl" })
 public class MyProfileCtl extends BaseCtl {
 
+	Logger log = Logger.getLogger(MyProfileCtl.class);
+
 	public static final String OP_CHANGE_MY_PASSWORD = "Change Password";
 
+	/**
+	 * Validates the input data before saving profile changes.
+	 * 
+	 * @param request HttpServletRequest object
+	 * @return true if valid, false otherwise
+	 */
 	@Override
 	protected boolean validate(HttpServletRequest request) {
+		log.info("MyProfileCtl validate Method Started");
 
 		boolean isValid = true;
 
@@ -71,12 +88,19 @@ public class MyProfileCtl extends BaseCtl {
 			isValid = false;
 		}
 
+		log.info("MyProfileCtl validate Method Ended");
 		return isValid;
-
 	}
 
+	/**
+	 * Populates the UserBean from request parameters.
+	 * 
+	 * @param request HttpServletRequest object
+	 * @return Populated UserBean
+	 */
 	@Override
 	protected BaseBean populateBean(HttpServletRequest request) {
+		log.info("MyProfileCtl populateBean Method Started");
 
 		UserBean bean = new UserBean();
 
@@ -90,12 +114,22 @@ public class MyProfileCtl extends BaseCtl {
 
 		populateDTO(bean, request);
 
+		log.info("MyProfileCtl populateBean Method Ended");
 		return bean;
 	}
 
+	/**
+	 * Handles GET request to load user profile into form.
+	 * 
+	 * @param request  HttpServletRequest object
+	 * @param response HttpServletResponse object
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		log.info("MyProfileCtl doGet Method Started");
 
 		HttpSession session = request.getSession(true);
 		UserBean user = (UserBean) session.getAttribute("user");
@@ -113,12 +147,23 @@ public class MyProfileCtl extends BaseCtl {
 				return;
 			}
 		}
+		log.info("MyProfileCtl doGet Method Ended");
 		ServletUtility.forward(getView(), request, response);
 	}
 
+	/**
+	 * Handles POST request for updating user profile or navigating to change
+	 * password.
+	 * 
+	 * @param request  HttpServletRequest object
+	 * @param response HttpServletResponse object
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		log.info("MyProfileCtl doPost Method Started");
 
 		HttpSession session = request.getSession(true);
 
@@ -157,10 +202,15 @@ public class MyProfileCtl extends BaseCtl {
 			ServletUtility.redirect(ORSView.CHANGE_PASSWORD_CTL, request, response);
 			return;
 		}
+		log.info("MyProfileCtl doPost Method Ended");
 		ServletUtility.forward(getView(), request, response);
-
 	}
 
+	/**
+	 * Returns the view associated with My Profile page.
+	 * 
+	 * @return view path as String
+	 */
 	@Override
 	protected String getView() {
 		return ORSView.MY_PROFILE_VIEW;

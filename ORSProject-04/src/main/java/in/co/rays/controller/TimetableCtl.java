@@ -9,6 +9,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import in.co.rays.bean.BaseBean;
 import in.co.rays.bean.CourseBean;
 import in.co.rays.bean.SubjectBean;
@@ -23,11 +25,26 @@ import in.co.rays.util.DataValidator;
 import in.co.rays.util.PropertyReader;
 import in.co.rays.util.ServletUtility;
 
+/**
+ * Timetable Controller to handle timetable add, update, and preload data.
+ * Performs validation, preloading of course and subject lists and manages
+ * timetable CRUD.
+ * 
+ * @author Chetan Patidar
+ */
 @WebServlet(name = "TimetableCtl", urlPatterns = { "/ctl/TimetableCtl" })
 public class TimetableCtl extends BaseCtl {
 
+	Logger log = Logger.getLogger(TimetableCtl.class);
+
+	/**
+	 * Preloads semester map, course list, and subject list for the view.
+	 * 
+	 * @param request HttpServletRequest
+	 */
 	@Override
 	protected void preload(HttpServletRequest request) {
+		log.info("TimetableCtl preload Method Started");
 
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put("1st", "1st");
@@ -55,10 +72,19 @@ public class TimetableCtl extends BaseCtl {
 			e.printStackTrace();
 			return;
 		}
+		log.info("TimetableCtl preload Method Ended");
 	}
 
+	/**
+	 * Validates the input parameters.
+	 * 
+	 * @param request HttpServletRequest
+	 * @return boolean true if valid otherwise false
+	 */
 	@Override
 	protected boolean validate(HttpServletRequest request) {
+		log.info("TimetableCtl validate Method Started");
+
 		boolean isValid = true;
 
 		if (DataValidator.isNull(request.getParameter("semester"))) {
@@ -97,11 +123,19 @@ public class TimetableCtl extends BaseCtl {
 			isValid = false;
 		}
 
+		log.info("TimetableCtl validate Method Ended");
 		return isValid;
 	}
 
+	/**
+	 * Populates TimetableBean from request parameters.
+	 * 
+	 * @param request HttpServletRequest
+	 * @return BaseBean containing Timetable data
+	 */
 	@Override
 	protected BaseBean populateBean(HttpServletRequest request) {
+		log.info("TimetableCtl populateBean Method Started");
 
 		TimetableBean bean = new TimetableBean();
 
@@ -115,12 +149,22 @@ public class TimetableCtl extends BaseCtl {
 
 		populateDTO(bean, request);
 
+		log.info("TimetableCtl populateBean Method Ended");
 		return bean;
 	}
 
+	/**
+	 * Handles GET request to load the TimetableBean if id is present.
+	 * 
+	 * @param request  HttpServletRequest
+	 * @param response HttpServletResponse
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		log.info("TimetableCtl doGet Method Started");
 
 		long id = DataUtility.getLong(request.getParameter("id"));
 
@@ -135,12 +179,23 @@ public class TimetableCtl extends BaseCtl {
 				return;
 			}
 		}
+		log.info("TimetableCtl doGet Method Ended");
 		ServletUtility.forward(getView(), request, response);
 	}
 
+	/**
+	 * Handles POST requests for Save, Update, Cancel, and Reset operations.
+	 * Performs duplicate checks before save or update.
+	 * 
+	 * @param request  HttpServletRequest
+	 * @param response HttpServletResponse
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		log.info("TimetableCtl doPost Method Started");
 
 		String op = DataUtility.getString(request.getParameter("operation"));
 
@@ -217,9 +272,15 @@ public class TimetableCtl extends BaseCtl {
 			ServletUtility.redirect(ORSView.TIMETABLE_CTL, request, response);
 			return;
 		}
+		log.info("TimetableCtl doPost Method Ended");
 		ServletUtility.forward(getView(), request, response);
 	}
 
+	/**
+	 * Returns the view for timetable.
+	 * 
+	 * @return String view path
+	 */
 	@Override
 	protected String getView() {
 		return ORSView.TIMETABLE_VIEW;

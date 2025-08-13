@@ -8,6 +8,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import in.co.rays.bean.BaseBean;
 import in.co.rays.bean.RoleBean;
 import in.co.rays.bean.UserBean;
@@ -20,11 +22,26 @@ import in.co.rays.util.DataValidator;
 import in.co.rays.util.PropertyReader;
 import in.co.rays.util.ServletUtility;
 
+/**
+ * User Controller to handle adding, updating, validation and displaying User
+ * form.
+ * 
+ * Author: Chetan Patidar
+ */
 @WebServlet(name = "UserCtl", urlPatterns = { "/ctl/UserCtl" })
 public class UserCtl extends BaseCtl {
 
+	Logger log = Logger.getLogger(UserCtl.class);
+
+	/**
+	 * Loads list of Roles and sets in request for dropdown.
+	 * 
+	 * @param request HttpServletRequest
+	 */
 	@Override
 	protected void preload(HttpServletRequest request) {
+		log.info("UserCtl preload Method Started");
+
 		RoleModel model = new RoleModel();
 		try {
 			List<RoleBean> roleList = model.list();
@@ -32,10 +49,19 @@ public class UserCtl extends BaseCtl {
 		} catch (ApplicationException e) {
 			e.printStackTrace();
 		}
+		log.info("UserCtl preload Method Ended");
 	}
 
+	/**
+	 * Validates User form data from the request.
+	 * 
+	 * @param request HttpServletRequest
+	 * @return boolean true if valid, else false
+	 */
 	@Override
 	protected boolean validate(HttpServletRequest request) {
+		log.info("UserCtl validate Method Started");
+
 		boolean isValid = true;
 
 		if (DataValidator.isNull(request.getParameter("firstName"))) {
@@ -111,42 +137,51 @@ public class UserCtl extends BaseCtl {
 			isValid = false;
 		}
 
+		log.info("UserCtl validate Method Ended");
 		return isValid;
 	}
 
+	/**
+	 * Populates UserBean from request parameters.
+	 * 
+	 * @param request HttpServletRequest
+	 * @return BaseBean populated UserBean
+	 */
 	@Override
 	protected BaseBean populateBean(HttpServletRequest request) {
+		log.info("UserCtl populateBean Method Started");
 
 		UserBean bean = new UserBean();
 
 		bean.setId(DataUtility.getLong(request.getParameter("id")));
-
 		bean.setRoleId(DataUtility.getLong(request.getParameter("roleId")));
-
 		bean.setFirstName(DataUtility.getString(request.getParameter("firstName")));
-
 		bean.setLastName(DataUtility.getString(request.getParameter("lastName")));
-
 		bean.setLogin(DataUtility.getString(request.getParameter("login")));
-
 		bean.setPassword(DataUtility.getString(request.getParameter("password")));
-
 		bean.setConfirmPassword(DataUtility.getString(request.getParameter("confirmPassword")));
-
 		bean.setGender(DataUtility.getString(request.getParameter("gender")));
-
 		bean.setDob(DataUtility.getDate(request.getParameter("dob")));
-
 		bean.setMobileNo(DataUtility.getString(request.getParameter("mobileNo")));
 
 		populateDTO(bean, request);
 
+		log.info("UserCtl populateBean Method Ended");
 		return bean;
 	}
 
+	/**
+	 * Handles GET request for user form. If id is passed, loads UserBean to edit.
+	 * 
+	 * @param request  HttpServletRequest
+	 * @param response HttpServletResponse
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		log.info("UserCtl doGet Method Started");
 
 		long id = DataUtility.getLong(request.getParameter("id"));
 
@@ -163,12 +198,22 @@ public class UserCtl extends BaseCtl {
 			}
 		}
 
+		log.info("UserCtl doGet Method Ended");
 		ServletUtility.forward(getView(), request, response);
 	}
 
+	/**
+	 * Handles POST request for save, update, cancel, and reset operations.
+	 * 
+	 * @param request  HttpServletRequest
+	 * @param response HttpServletResponse
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		log.info("UserCtl doPost Method Started");
 
 		String op = DataUtility.getString(request.getParameter("operation"));
 
@@ -191,6 +236,7 @@ public class UserCtl extends BaseCtl {
 				ServletUtility.setBean(bean, request);
 				ServletUtility.setErrorMessage("Login Id Already Exists", request);
 				ServletUtility.forward(getView(), request, response);
+				return;
 			}
 		} else if (OP_UPDATE.equalsIgnoreCase(op)) {
 			UserBean bean = (UserBean) populateBean(request);
@@ -200,7 +246,7 @@ public class UserCtl extends BaseCtl {
 					model.update(bean);
 				}
 				ServletUtility.setBean(bean, request);
-				ServletUtility.setSuccessMessage("User Updated Succesfully !", request);
+				ServletUtility.setSuccessMessage("User Updated Successfully!", request);
 
 			} catch (ApplicationException e) {
 				e.printStackTrace();
@@ -217,9 +263,15 @@ public class UserCtl extends BaseCtl {
 			return;
 		}
 
+		log.info("UserCtl doPost Method Ended");
 		ServletUtility.forward(getView(), request, response);
 	}
 
+	/**
+	 * Returns the view for User form.
+	 * 
+	 * @return String view path
+	 */
 	@Override
 	protected String getView() {
 		return ORSView.USER_VIEW;

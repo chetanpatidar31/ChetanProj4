@@ -1,7 +1,14 @@
 package in.co.rays.bean;
 
 import java.util.Date;
-
+/**
+ * Timetable JavaBean encapsulates Timetable attributes
+ * 
+ * @author Chetan Patidar
+ * @version 1.0
+ * Copyright (c) Chetan Patidar
+ * 
+ */
 public class TimetableBean extends BaseBean{
 	private String semester;
 	private String description;

@@ -13,8 +13,19 @@ import javax.mail.internet.MimeMessage;
 
 import in.co.rays.exception.ApplicationException;
 
+/**
+ * Email Utility provides Email Services
+ *
+ * @author Chetan Patidar
+ * @version 1.0
+ * @Copyright (c) Chetan Patidar
+ *
+ */
 public class EmailUtility {
 
+	/**
+	 * Create Resource Bundle to read properties file
+	 */
 	static ResourceBundle rb = ResourceBundle.getBundle("in.co.rays.bundle.system");
 
 	private static final String SMTP_HOST_NAME = rb.getString("smtp.server");
@@ -22,8 +33,15 @@ public class EmailUtility {
 	private static final String emailFromAddress = rb.getString("email.login");
 	private static final String emailPassword = rb.getString("email.pwd");
 
+	/**
+	 * Email server properties
+	 */
+
 	private static Properties props = new Properties();
 
+	/**
+	 * Static block to initialize static parameters
+	 */
 	static {
 		props.put("mail.smtp.host", SMTP_HOST_NAME);
 		props.put("mail.smtp.auth", "true");
@@ -36,6 +54,12 @@ public class EmailUtility {
 		props.put("mail.smtp.socketFactory.fallback", "false");
 	}
 
+	/**
+	 * Sends an Email
+	 *
+	 * @param emailMessageDTO : Email message
+	 * @throws ApplicationException
+	 */
 	public static void sendMail(EmailMessage emailMessageDTO) throws ApplicationException {
 		try {
 			// Setup mail session
@@ -74,5 +98,5 @@ public class EmailUtility {
 		}
 		return addresses;
 	}
-	
+
 }

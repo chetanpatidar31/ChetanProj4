@@ -7,6 +7,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import in.co.rays.bean.BaseBean;
 import in.co.rays.bean.RoleBean;
 import in.co.rays.exception.ApplicationException;
@@ -17,11 +19,28 @@ import in.co.rays.util.DataValidator;
 import in.co.rays.util.PropertyReader;
 import in.co.rays.util.ServletUtility;
 
+/**
+ * RoleCtl handles operations for adding and updating Role entities. <br>
+ * Functionality includes form validation, population of bean, and communication
+ * with the model layer.
+ * 
+ * @author Chetan Patidar
+ */
 @WebServlet(name = "RoleCtl", urlPatterns = { "/ctl/RoleCtl" })
 public class RoleCtl extends BaseCtl {
 
+	Logger log = Logger.getLogger(RoleCtl.class);
+	
+	/**
+	 * Validates form input fields.
+	 *
+	 * @param request HTTP request
+	 * @return true if validation passes, false otherwise
+	 */
 	@Override
 	protected boolean validate(HttpServletRequest request) {
+		log.info("RoleCtl validate Method Started");
+		
 		boolean isValid = true;
 
 		if (DataValidator.isNull(request.getParameter("name"))) {
@@ -37,12 +56,20 @@ public class RoleCtl extends BaseCtl {
 			isValid = false;
 		}
 
+		log.info("RoleCtl validate Method Ended");
 		return isValid;
 	}
 
+	/**
+	 * Populates RoleBean from request parameters.
+	 *
+	 * @param request HTTP request
+	 * @return populated RoleBean
+	 */
 	@Override
 	protected BaseBean populateBean(HttpServletRequest request) {
-
+		log.info("RoleCtl populateBean Method Started");
+		
 		RoleBean bean = new RoleBean();
 
 		bean.setId(DataUtility.getLong(request.getParameter("id")));
@@ -51,13 +78,23 @@ public class RoleCtl extends BaseCtl {
 
 		populateDTO(bean, request);
 
+		log.info("RoleCtl populateBean Method Ended");
 		return bean;
 	}
 
+	/**
+	 * Handles HTTP GET request to load the role data for editing.
+	 *
+	 * @param request  HTTP request
+	 * @param response HTTP response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		log.info("RoleCtl doGet Method Started");
+		
 		RoleModel model = new RoleModel();
 
 		long id = DataUtility.getLong(request.getParameter("id"));
@@ -73,13 +110,24 @@ public class RoleCtl extends BaseCtl {
 			}
 		}
 
+		log.info("RoleCtl doGet Method Ended");
 		ServletUtility.forward(getView(), request, response);
 	}
 
+	/**
+	 * Handles HTTP POST request to perform save, update, reset, or cancel
+	 * operations.
+	 *
+	 * @param request  HTTP request
+	 * @param response HTTP response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		log.info("RoleCtl doPost Method Started");
+		
 		String op = DataUtility.getString(request.getParameter("operation"));
 
 		RoleModel model = new RoleModel();
@@ -126,9 +174,15 @@ public class RoleCtl extends BaseCtl {
 			ServletUtility.redirect(ORSView.ROLE_LIST_CTL, request, response);
 			return;
 		}
+		log.info("RoleCtl doPost Method Ended");
 		ServletUtility.forward(getView(), request, response);
 	}
 
+	/**
+	 * Returns the view for this controller.
+	 *
+	 * @return view path as a String
+	 */
 	@Override
 	protected String getView() {
 		return ORSView.ROLE_VIEW;

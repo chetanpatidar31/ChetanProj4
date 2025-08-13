@@ -8,51 +8,85 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import in.co.rays.bean.BaseBean;
-import in.co.rays.bean.SubjectBean;
 import in.co.rays.bean.CourseBean;
 import in.co.rays.bean.SubjectBean;
 import in.co.rays.exception.ApplicationException;
-import in.co.rays.model.SubjectModel;
 import in.co.rays.model.CourseModel;
 import in.co.rays.model.SubjectModel;
 import in.co.rays.util.DataUtility;
 import in.co.rays.util.PropertyReader;
 import in.co.rays.util.ServletUtility;
 
+/**
+ * Subject List Controller. Handles listing, searching, pagination, and deletion
+ * of Subjects. Also preloads Course and Subject lists for use in views.
+ * 
+ * @author Chetan Patidar
+ */
 @WebServlet(name = "SubjectListCtl", urlPatterns = { "/ctl/SubjectListCtl" })
 public class SubjectListCtl extends BaseCtl {
 
+	Logger log = Logger.getLogger(SubjectListCtl.class);
+	
+	/**
+	 * Preloads course list and subject list for the view.
+	 *
+	 * @param request HttpServletRequest
+	 */
 	@Override
 	protected void preload(HttpServletRequest request) {
+		log.info("SubjectListCtl preload Method Started");
+		
 		CourseModel courseModel = new CourseModel();
 		SubjectModel subjectModel = new SubjectModel();
 
 		try {
 			List<CourseBean> courseList = courseModel.list();
 			List<SubjectBean> subjectList = subjectModel.list();
-			
+
 			request.setAttribute("courseList", courseList);
 			request.setAttribute("subjectList", subjectList);
 		} catch (ApplicationException e) {
 			e.printStackTrace();
 			return;
 		}
-
+		log.info("SubjectListCtl preload Method Ended");
 	}
 
+	/**
+	 * Populates SubjectBean from request parameters.
+	 *
+	 * @param request HttpServletRequest
+	 * @return SubjectBean populated with form data
+	 */
 	@Override
 	protected BaseBean populateBean(HttpServletRequest request) {
+		log.info("SubjectListCtl populateBean Method Started");
+
 		SubjectBean bean = new SubjectBean();
-		
+
 		bean.setId(DataUtility.getLong(request.getParameter("subjectId")));
 		bean.setCourseId(DataUtility.getLong(request.getParameter("courseId")));
 
+		log.info("SubjectListCtl populateBean Method Ended");
 		return bean;
 	}
 
+	/**
+	 * Handles GET requests to display subject list with pagination.
+	 *
+	 * @param request  HttpServletRequest
+	 * @param response HttpServletResponse
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		log.info("SubjectListCtl doGet Method Started");
 
 		int pageNo = 1;
 		int pageSize = DataUtility.getInt(PropertyReader.getValue("page.size"));
@@ -72,17 +106,30 @@ public class SubjectListCtl extends BaseCtl {
 			ServletUtility.setBean(bean, request);
 			request.setAttribute("nextListSize", next.size());
 
-			ServletUtility.forward(getView(), request, response);
 
 		} catch (ApplicationException e) {
 			e.printStackTrace();
 			return;
 		}
+		log.info("SubjectListCtl doGet Method Ended");
+		ServletUtility.forward(getView(), request, response);
 
 	}
 
+	/**
+	 * Handles POST requests for search, pagination, new, delete, reset, and back
+	 * operations.
+	 *
+	 * @param request  HttpServletRequest
+	 * @param response HttpServletResponse
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		log.info("SubjectListCtl doPost Method Started");
+
 
 		List list = null;
 		List next = null;
@@ -144,13 +191,19 @@ public class SubjectListCtl extends BaseCtl {
 			ServletUtility.setBean(bean, request);
 			request.setAttribute("nextListSize", next.size());
 
-			ServletUtility.forward(getView(), request, response);
 		} catch (ApplicationException e) {
 			e.printStackTrace();
 			return;
 		}
+		log.info("SubjectListCtl doPost Method Ended");
+		ServletUtility.forward(getView(), request, response);
 	}
 
+	/**
+	 * Returns the view page for subject list.
+	 *
+	 * @return String view path
+	 */
 	@Override
 	protected String getView() {
 		return ORSView.SUBJECT_LIST_VIEW;

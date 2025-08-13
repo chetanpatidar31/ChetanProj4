@@ -2,6 +2,13 @@ package in.co.rays.bean;
 
 import java.util.Date;
 
+/**
+ * Faculty JavaBean encapsulates Faculty attributes
+ * 
+ * @author Chetan Patidar
+ * @version 1.0 Copyright (c) Chetan Patidar
+ * 
+ */
 public class FacultyBean extends BaseBean {
 	private String firstName;
 	private String lastName;
@@ -111,7 +118,7 @@ public class FacultyBean extends BaseBean {
 	public void setSubjectName(String subjectName) {
 		this.subjectName = subjectName;
 	}
-	
+
 	@Override
 	public String getKey() {
 		return id + "";
@@ -119,7 +126,7 @@ public class FacultyBean extends BaseBean {
 
 	@Override
 	public String getValue() {
-		return firstName+" "+lastName;
+		return firstName + " " + lastName;
 	}
 
 }
