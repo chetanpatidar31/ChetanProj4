@@ -69,7 +69,7 @@ public class TimetableCtl extends BaseCtl {
 			request.setAttribute("subjectList", subjectList);
 
 		} catch (ApplicationException e) {
-			e.printStackTrace();
+			log.error(e);
 			return;
 		}
 		log.info("TimetableCtl preload Method Ended");
@@ -175,7 +175,8 @@ public class TimetableCtl extends BaseCtl {
 				TimetableBean bean = model.findByPk(id);
 				ServletUtility.setBean(bean, request);
 			} catch (ApplicationException e) {
-				e.printStackTrace();
+				log.error(e);
+				ServletUtility.handleException(e, request, response);
 				return;
 			}
 		}
@@ -229,7 +230,8 @@ public class TimetableCtl extends BaseCtl {
 					ServletUtility.setErrorMessage("Timetable already exist!", request);
 				}
 			} catch (ApplicationException e) {
-				e.printStackTrace();
+				log.error(e);
+				ServletUtility.handleException(e, request, response);
 				return;
 			} catch (DuplicateRecordException e) {
 				ServletUtility.setBean(bean, request);
@@ -258,7 +260,8 @@ public class TimetableCtl extends BaseCtl {
 				}
 
 			} catch (ApplicationException e) {
-				e.printStackTrace();
+				log.error(e);
+				ServletUtility.handleException(e, request, response);
 				return;
 			} catch (DuplicateRecordException e) {
 				ServletUtility.setBean(bean, request);

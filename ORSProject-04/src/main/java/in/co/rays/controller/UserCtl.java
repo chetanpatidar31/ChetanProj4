@@ -47,7 +47,7 @@ public class UserCtl extends BaseCtl {
 			List<RoleBean> roleList = model.list();
 			request.setAttribute("roleList", roleList);
 		} catch (ApplicationException e) {
-			e.printStackTrace();
+			log.error(e);
 		}
 		log.info("UserCtl preload Method Ended");
 	}
@@ -193,7 +193,8 @@ public class UserCtl extends BaseCtl {
 				bean = model.findByPk(id);
 				ServletUtility.setBean(bean, request);
 			} catch (ApplicationException e) {
-				e.printStackTrace();
+				log.error(e);
+				ServletUtility.handleException(e, request, response);
 				return;
 			}
 		}
@@ -230,7 +231,8 @@ public class UserCtl extends BaseCtl {
 				ServletUtility.setSuccessMessage("User Add Successful", request);
 
 			} catch (ApplicationException e) {
-				e.printStackTrace();
+				log.error(e);
+				ServletUtility.handleException(e, request, response);
 				return;
 			} catch (DuplicateRecordException e) {
 				ServletUtility.setBean(bean, request);
@@ -249,7 +251,8 @@ public class UserCtl extends BaseCtl {
 				ServletUtility.setSuccessMessage("User Updated Successfully!", request);
 
 			} catch (ApplicationException e) {
-				e.printStackTrace();
+				log.error(e);
+				ServletUtility.handleException(e, request, response);
 				return;
 			} catch (DuplicateRecordException e) {
 				ServletUtility.setBean(bean, request);

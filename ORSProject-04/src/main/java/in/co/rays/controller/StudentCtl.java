@@ -50,7 +50,7 @@ public class StudentCtl extends BaseCtl {
 			List<CollegeBean> collegeList = model.list();
 			request.setAttribute("collegeList", collegeList);
 		} catch (ApplicationException e) {
-			e.printStackTrace();
+			log.error(e);
 		}
 		log.info("StudentCtl preload Method Ended");
 	}
@@ -173,7 +173,8 @@ public class StudentCtl extends BaseCtl {
 				StudentBean bean = model.findByPk(id);
 				ServletUtility.setBean(bean, request);
 			} catch (ApplicationException e) {
-				e.printStackTrace();
+				log.error(e);
+				ServletUtility.handleException(e, request, response);
 			}
 		}
 
@@ -206,7 +207,8 @@ public class StudentCtl extends BaseCtl {
 				ServletUtility.setBean(bean, request);
 				ServletUtility.setSuccessMessage("Student added Successfully", request);
 			} catch (ApplicationException e) {
-				e.printStackTrace();
+				log.error(e);
+				ServletUtility.handleException(e, request, response);
 			} catch (DuplicateRecordException e) {
 				ServletUtility.setBean(bean, request);
 				ServletUtility.setErrorMessage("Student email Already exists", request);
@@ -220,7 +222,8 @@ public class StudentCtl extends BaseCtl {
 				ServletUtility.setBean(bean, request);
 				ServletUtility.setSuccessMessage("Student updated Successfully", request);
 			} catch (ApplicationException e) {
-				e.printStackTrace();
+				log.error(e);
+				ServletUtility.handleException(e, request, response);
 			} catch (DuplicateRecordException e) {
 				ServletUtility.setBean(bean, request);
 				ServletUtility.setErrorMessage("Student email Already exists", request);

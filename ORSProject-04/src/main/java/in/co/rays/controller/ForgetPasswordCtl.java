@@ -125,9 +125,9 @@ public class ForgetPasswordCtl extends BaseCtl {
             } catch (RecordNotFoundException e) {
                 ServletUtility.setErrorMessage(e.getMessage(), request);
             } catch (ApplicationException e) {
-                e.printStackTrace();
                 ServletUtility.setErrorMessage("Please check your internet connection..!!", request);
-            }
+                log.error(e);
+				ServletUtility.handleException(e, request, response);            }
         }
         log.info("ForgetPasswordCtl doPost Method Ended");
         ServletUtility.forward(getView(), request, response);

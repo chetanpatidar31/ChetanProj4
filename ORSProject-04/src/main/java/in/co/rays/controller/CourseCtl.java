@@ -125,7 +125,8 @@ public class CourseCtl extends BaseCtl {
 				CourseBean bean = model.findByPk(id);
 				ServletUtility.setBean(bean, request);
 			} catch (ApplicationException e) {
-				e.printStackTrace();
+				log.error(e);
+				ServletUtility.handleException(e, request, response);
 				return;
 			}
 		}
@@ -168,7 +169,8 @@ public class CourseCtl extends BaseCtl {
 				ServletUtility.setBean(bean, request);
 				ServletUtility.setSuccessMessage("Course added successfully", request);
 			} catch (ApplicationException e) {
-				e.printStackTrace();
+				log.error(e);
+				ServletUtility.handleException(e, request, response);
 				return;
 			} catch (DuplicateRecordException e) {
 				ServletUtility.setBean(bean, request);
@@ -184,7 +186,8 @@ public class CourseCtl extends BaseCtl {
 					ServletUtility.setBean(bean, request);
 					ServletUtility.setSuccessMessage("Course Updated successfully", request);
 				} catch (ApplicationException e) {
-					e.printStackTrace();
+					log.error(e);
+					ServletUtility.handleException(e, request, response);
 					return;
 				} catch (DuplicateRecordException e) {
 					ServletUtility.setBean(bean, request);

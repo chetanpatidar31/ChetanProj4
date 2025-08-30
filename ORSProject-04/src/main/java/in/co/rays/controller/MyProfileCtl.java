@@ -142,7 +142,7 @@ public class MyProfileCtl extends BaseCtl {
 				UserBean bean = model.findByPk(id);
 				ServletUtility.setBean(bean, request);
 			} catch (ApplicationException e) {
-				e.printStackTrace();
+				log.error(e);
 				ServletUtility.handleException(e, request, response);
 				return;
 			}
@@ -191,7 +191,7 @@ public class MyProfileCtl extends BaseCtl {
 				ServletUtility.setSuccessMessage("Profile has been updated Successfully. ", request);
 
 			} catch (ApplicationException e) {
-				e.printStackTrace();
+				log.error(e);
 				ServletUtility.handleException(e, request, response);
 				return;
 			} catch (DuplicateRecordException e) {

@@ -81,7 +81,8 @@ public class MarksheetListCtl extends BaseCtl {
 			request.setAttribute("nextListSize", next.size());
 
 		} catch (ApplicationException e) {
-			e.printStackTrace();
+			log.error(e);
+			ServletUtility.handleException(e, request, response);
 		}
 		log.info("MarksheetListCtl doGet Method Ended");
 		ServletUtility.forward(getView(), request, response);
@@ -168,7 +169,8 @@ public class MarksheetListCtl extends BaseCtl {
 			request.setAttribute("nextListSize", next.size());
 
 		} catch (ApplicationException e) {
-			e.printStackTrace();
+			log.error(e);
+			ServletUtility.handleException(e, request, response);
 			return;
 		}
 		log.info("MarksheetListCtl doPost Method Ended");

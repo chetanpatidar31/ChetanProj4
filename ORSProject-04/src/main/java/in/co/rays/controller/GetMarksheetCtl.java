@@ -111,7 +111,7 @@ public class GetMarksheetCtl extends BaseCtl {
 					ServletUtility.setErrorMessage("RollNo Does Not exists", request);
 				}
 			} catch (ApplicationException e) {
-				e.printStackTrace();
+				log.error(e);
 				ServletUtility.handleException(e, request, response);
 				return;
 			}

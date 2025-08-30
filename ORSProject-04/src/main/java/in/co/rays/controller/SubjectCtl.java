@@ -48,7 +48,7 @@ public class SubjectCtl extends BaseCtl {
 			List<CourseBean> courseList = model.list();
 			request.setAttribute("courseList", courseList);
 		} catch (ApplicationException e) {
-			e.printStackTrace();
+			log.error(e);
 			return;
 		}
 		log.info("SubjectCtl preload Method Ended");
@@ -132,7 +132,8 @@ public class SubjectCtl extends BaseCtl {
 				SubjectBean bean = model.findByPk(id);
 				ServletUtility.setBean(bean, request);
 			} catch (ApplicationException e) {
-				e.printStackTrace();
+				log.error(e);
+				ServletUtility.handleException(e, request, response);
 				return;
 			}
 		}
@@ -168,7 +169,8 @@ public class SubjectCtl extends BaseCtl {
 				ServletUtility.setSuccessMessage("Subject Add Successful", request);
 
 			} catch (ApplicationException e) {
-				e.printStackTrace();
+				log.error(e);
+				ServletUtility.handleException(e, request, response);
 				return;
 			} catch (DuplicateRecordException e) {
 				ServletUtility.setBean(bean, request);
@@ -185,7 +187,8 @@ public class SubjectCtl extends BaseCtl {
 				ServletUtility.setSuccessMessage("Subject Updated Succesfully !", request);
 
 			} catch (ApplicationException e) {
-				e.printStackTrace();
+				log.error(e);
+				ServletUtility.handleException(e, request, response);
 				return;
 			} catch (DuplicateRecordException e) {
 				ServletUtility.setBean(bean, request);

@@ -85,7 +85,9 @@ public final class JDBCDataSource {
 	 */
 	public static void closeConnection(Connection conn) {
 		try {
-			conn.close();
+			if (conn != null) {
+				conn.close();
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

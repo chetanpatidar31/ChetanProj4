@@ -92,7 +92,8 @@ public class FacultyListCtl extends BaseCtl {
             request.setAttribute("nextListSize", next.size());
 
         } catch (ApplicationException e) {
-            e.printStackTrace();
+        	log.error(e);
+			ServletUtility.handleException(e, request, response);
             return;
         }
         log.info("FacultyListCtl doGet Method Ended");
@@ -184,7 +185,8 @@ public class FacultyListCtl extends BaseCtl {
             request.setAttribute("nextListSize", next.size());
 
         } catch (ApplicationException e) {
-            e.printStackTrace();
+            log.error(e);
+			ServletUtility.handleException(e, request, response);
             return;
         }
 		log.info("FacultyListCtl doPost Method Ended");

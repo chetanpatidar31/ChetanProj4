@@ -44,7 +44,7 @@ public class CollegeListCtl extends BaseCtl {
 			request.setAttribute("collegeList", collegeList);
 			return;
 		} catch (ApplicationException e) {
-			e.printStackTrace();
+			log.error(e);
 		}
 		log.info("CollegeListCtl preload Method Ended");
 	}
@@ -100,7 +100,8 @@ public class CollegeListCtl extends BaseCtl {
 			request.setAttribute("nextListSize", next.size());
 
 		} catch (ApplicationException e) {
-			e.printStackTrace();
+			log.error(e);
+			ServletUtility.handleException(e, request, response);
 			return;
 		}
 		log.info("CollegeListCtl doGet Method Ended");
@@ -183,7 +184,8 @@ public class CollegeListCtl extends BaseCtl {
 			request.setAttribute("nextListSize", next.size());
 
 		} catch (ApplicationException e) {
-			e.printStackTrace();
+			log.error(e);
+			ServletUtility.handleException(e, request, response);
 			return;
 		}
 		log.info("CollegeListCtl doPost Method Ended");

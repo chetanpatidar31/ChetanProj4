@@ -133,7 +133,8 @@ public class CollegeCtl extends BaseCtl {
 				CollegeBean bean = model.findByPk(id);
 				ServletUtility.setBean(bean, request);
 			} catch (ApplicationException e) {
-				e.printStackTrace();
+				log.error(e);
+				ServletUtility.handleException(e, request, response);
 				return;
 			}
 		}
@@ -168,7 +169,8 @@ public class CollegeCtl extends BaseCtl {
 				ServletUtility.setSuccessMessage("College Added Successfully", request);
 
 			} catch (ApplicationException e) {
-				e.printStackTrace();
+				log.error(e);
+				ServletUtility.handleException(e, request, response);
 				return;
 			} catch (DuplicateRecordException e) {
 				ServletUtility.setBean(bean, request);
@@ -186,7 +188,8 @@ public class CollegeCtl extends BaseCtl {
 				ServletUtility.setSuccessMessage("College Updated Succesfully !", request);
 
 			} catch (ApplicationException e) {
-				e.printStackTrace();
+				log.error(e);
+				ServletUtility.handleException(e, request, response);
 				return;
 			} catch (DuplicateRecordException e) {
 				ServletUtility.setBean(bean, request);

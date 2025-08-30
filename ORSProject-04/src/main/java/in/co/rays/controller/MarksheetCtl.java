@@ -48,7 +48,7 @@ public class MarksheetCtl extends BaseCtl {
 			List<StudentBean> studentList = model.list();
 			request.setAttribute("studentList", studentList);
 		} catch (ApplicationException e) {
-			e.printStackTrace();
+			log.error(e);
 			return;
 		}
 		log.info("MarksheetCtl preload Method Ended");
@@ -183,7 +183,8 @@ public class MarksheetCtl extends BaseCtl {
 				MarksheetBean bean = model.findByPk(id);
 				ServletUtility.setBean(bean, request);
 			} catch (ApplicationException e) {
-				e.printStackTrace();
+				log.error(e);
+				ServletUtility.handleException(e, request, response);
 				return;
 			}
 		}
@@ -216,7 +217,8 @@ public class MarksheetCtl extends BaseCtl {
 				ServletUtility.setBean(bean, request);
 				ServletUtility.setSuccessMessage("Marksheet added successfully", request);
 			} catch (ApplicationException e) {
-				e.printStackTrace();
+				log.error(e);
+				ServletUtility.handleException(e, request, response);
 				return;
 			} catch (DuplicateRecordException e) {
 				ServletUtility.setBean(bean, request);
@@ -231,7 +233,8 @@ public class MarksheetCtl extends BaseCtl {
 				ServletUtility.setBean(bean, request);
 				ServletUtility.setSuccessMessage("Marksheet updated successfully", request);
 			} catch (ApplicationException e) {
-				e.printStackTrace();
+				log.error(e);
+				ServletUtility.handleException(e, request, response);
 				return;
 			} catch (DuplicateRecordException e) {
 				ServletUtility.setBean(bean, request);

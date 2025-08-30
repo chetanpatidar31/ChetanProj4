@@ -83,7 +83,8 @@ public class StudentListCtl extends BaseCtl {
 			request.setAttribute("nextListSize", next.size());
 
 		} catch (ApplicationException e) {
-			e.printStackTrace();
+			log.error(e);
+			ServletUtility.handleException(e, request, response);
 			return;
 		}
 
@@ -167,7 +168,8 @@ public class StudentListCtl extends BaseCtl {
 			request.setAttribute("nextListSize", next.size());
 
 		} catch (ApplicationException e) {
-			e.printStackTrace();
+			log.error(e);
+			ServletUtility.handleException(e, request, response);
 			return;
 		}
 		log.info("StudentListCtl doPost Method Ended");

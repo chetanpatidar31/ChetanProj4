@@ -46,7 +46,7 @@ public class RoleListCtl extends BaseCtl {
 			List<RoleBean> roleList = model.list();
 			request.setAttribute("roleList", roleList);
 		} catch (ApplicationException e) {
-			e.printStackTrace();
+			log.error(e);
 		}
 		log.info("RoleListCtl preload Method Ended");
 	}
@@ -104,7 +104,8 @@ public class RoleListCtl extends BaseCtl {
 			request.setAttribute("nextListSize", next.size());
 
 		} catch (ApplicationException e) {
-			e.printStackTrace();
+			log.error(e);
+			ServletUtility.handleException(e, request, response);
 		}
 		log.info("RoleListCtl doGet Method Ended");
 		ServletUtility.forward(getView(), request, response);
@@ -189,7 +190,8 @@ public class RoleListCtl extends BaseCtl {
 			request.setAttribute("nextListSize", next.size());
 
 		} catch (ApplicationException e) {
-			e.printStackTrace();
+			log.error(e);
+			ServletUtility.handleException(e, request, response);
 		}
 		log.info("RoleListCtl doPost Method Ended");
 		ServletUtility.forward(getView(), request, response);

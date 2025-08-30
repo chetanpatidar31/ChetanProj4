@@ -105,7 +105,8 @@ public class RoleCtl extends BaseCtl {
 				bean = model.findByPk(id);
 				ServletUtility.setBean(bean, request);
 			} catch (ApplicationException e) {
-				e.printStackTrace();
+				log.error(e);
+				ServletUtility.handleException(e, request, response);
 				return;
 			}
 		}
@@ -142,7 +143,7 @@ public class RoleCtl extends BaseCtl {
 				ServletUtility.setBean(bean, request);
 				ServletUtility.setSuccessMessage("Role added Succesfully", request);
 			} catch (ApplicationException e) {
-				e.printStackTrace();
+				log.error(e);
 				ServletUtility.handleException(e, request, response);
 				return;
 			} catch (DuplicateRecordException e) {
@@ -159,7 +160,7 @@ public class RoleCtl extends BaseCtl {
 					ServletUtility.setBean(bean, request);
 					ServletUtility.setSuccessMessage("Role Updated successfully", request);
 				} catch (ApplicationException e) {
-					e.printStackTrace();
+					log.error(e);
 					ServletUtility.handleException(e, request, response);
 					return;
 				} catch (DuplicateRecordException e) {

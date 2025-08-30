@@ -50,7 +50,7 @@ public class SubjectListCtl extends BaseCtl {
 			request.setAttribute("courseList", courseList);
 			request.setAttribute("subjectList", subjectList);
 		} catch (ApplicationException e) {
-			e.printStackTrace();
+			log.error(e);
 			return;
 		}
 		log.info("SubjectListCtl preload Method Ended");
@@ -108,7 +108,8 @@ public class SubjectListCtl extends BaseCtl {
 
 
 		} catch (ApplicationException e) {
-			e.printStackTrace();
+			log.error(e);
+			ServletUtility.handleException(e, request, response);
 			return;
 		}
 		log.info("SubjectListCtl doGet Method Ended");
@@ -192,7 +193,8 @@ public class SubjectListCtl extends BaseCtl {
 			request.setAttribute("nextListSize", next.size());
 
 		} catch (ApplicationException e) {
-			e.printStackTrace();
+			log.error(e);
+			ServletUtility.handleException(e, request, response);
 			return;
 		}
 		log.info("SubjectListCtl doPost Method Ended");

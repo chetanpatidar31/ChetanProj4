@@ -50,7 +50,7 @@ public class TimetableListCtl extends BaseCtl {
 			request.setAttribute("courseList", courseList);
 			request.setAttribute("subjectList", subjectList);
 		} catch (ApplicationException e) {
-			e.printStackTrace();
+			log.error(e);
 			return;
 		}
 		log.info("TimetableListCtl preload Method Ended");
@@ -109,7 +109,8 @@ public class TimetableListCtl extends BaseCtl {
 			request.setAttribute("nextListSize", next.size());
 
 		} catch (ApplicationException e) {
-			e.printStackTrace();
+			log.error(e);
+			ServletUtility.handleException(e, request, response);
 			return;
 		}
 
@@ -192,7 +193,8 @@ public class TimetableListCtl extends BaseCtl {
 			request.setAttribute("nextListSize", next.size());
 
 		} catch (ApplicationException e) {
-			e.printStackTrace();
+			log.error(e);
+			ServletUtility.handleException(e, request, response);
 			return;
 		}
 		log.info("TimetableListCtl doPost Method Ended");

@@ -46,7 +46,7 @@ public class CourseListCtl extends BaseCtl {
 			List<CourseBean> courseList = model.list();
 			request.setAttribute("courseList", courseList);
 		} catch (ApplicationException e) {
-			e.printStackTrace();
+			log.error(e);
 			return;
 		}
 		log.info("CourseListCtl preload Method Ended");
@@ -105,7 +105,8 @@ public class CourseListCtl extends BaseCtl {
 			request.setAttribute("nextListSize", next.size());
 
 		} catch (ApplicationException e) {
-			e.printStackTrace();
+			log.error(e);
+			ServletUtility.handleException(e, request, response);
 			return;
 		}
 		log.info("CourseListCtl doGet Method Ended");
@@ -192,7 +193,8 @@ public class CourseListCtl extends BaseCtl {
 			request.setAttribute("nextListSize", next.size());
 
 		} catch (ApplicationException e) {
-			e.printStackTrace();
+			log.error(e);
+			ServletUtility.handleException(e, request, response);
 			return;
 		}
 

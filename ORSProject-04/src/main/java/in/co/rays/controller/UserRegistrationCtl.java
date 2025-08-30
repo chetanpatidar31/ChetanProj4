@@ -189,7 +189,8 @@ public class UserRegistrationCtl extends BaseCtl {
 				ServletUtility.forward(getView(), request, response);
 				return;
 			} catch (ApplicationException e) {
-				e.printStackTrace();
+				log.error(e);
+				ServletUtility.handleException(e, request, response);
 				return;
 			} catch (DuplicateRecordException e) {
 				ServletUtility.setBean(bean, request);
