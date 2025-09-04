@@ -31,8 +31,7 @@
 
 	<h1 align="center">
 		<font size="10px" color="red"> <a
-			href="<%=ORSView.WELCOME_CTL%>">Online Result System</a></font>
-			<h3>Welcome to Chetan's Website</h3>
+			href="<%=ORSView.WELCOME_CTL%>">Online Result System</a></font>			
 	</h1>
 
 </body>
