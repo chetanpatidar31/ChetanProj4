@@ -68,5 +68,6 @@ in\co\rays\controller\CourseListCtl.class
 in\co\rays\bean\CollegeBean.class
 in\co\rays\controller\RoleCtl.class
 in\co\rays\controller\TimetableCtl.class
+in\co\rays\controller\FrontController.class
 in\co\rays\controller\ORSView.class
 in\co\rays\test\TestFacultyModel.class

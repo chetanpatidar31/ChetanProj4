@@ -84,7 +84,7 @@
                     <td style="text-align: center; text-transform: capitalize;"><%=bean.getCourseName()%></td>
                     <td style="text-align: center; text-transform: capitalize;"><%=bean.getDescription()%></td>
                     <td style="text-align: center;">
-                        <a href="SubjectCtl?id=<%=bean.getId()%>">Edit</a>
+                        <a href="<%=ORSView.SUBJECT_CTL%>?id=<%=bean.getId()%>">Edit</a>
                     </td>
                 </tr>
                 <%
@@ -125,5 +125,6 @@
             %>
         </form>
     </div>
+    <%@ include file="Footer.jsp" %>
 </body>
 </html>

@@ -61,7 +61,7 @@
 							class="input-group-addon"> <span
 								class="glyphicon glyphicon-calendar"></span>
 						</span> <span data-datepicker date-format="dd/MM/yyyy" date-typer="true">
-								<input type="date" name="examDate"
+								<input type="text" id="udatee" name="examDate"
 								placeholder="Select Date of Exam"
 								value="<%=DataUtility.getDateString(bean.getExamDate())%>">
 						</span>
@@ -105,7 +105,7 @@
 					<td style="text-align: center; text-transform: capitalize;"><%=bean.getExamTime()%></td>
 					<td style="text-align: center; text-transform: capitalize;"><%=bean.getDescription()%></td>
 					<td style="text-align: center;"><a
-						href="TimetableCtl?id=<%=bean.getId()%>">Edit</a></td>
+						href="<%=ORSView.SUBJECT_CTL%>?id=<%=bean.getId()%>">Edit</a></td>
 				</tr>
 				<%
 					}
@@ -144,5 +144,6 @@
 
 		</form>
 	</div>
+	<%@ include file="Footer.jsp" %>
 </body>
 </html>

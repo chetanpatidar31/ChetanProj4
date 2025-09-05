@@ -95,7 +95,7 @@
 						String date = sdf.format(bean.getDob());
 					%>
 					<td style="text-align: center;"><%=date%></td>
-					<td style="text-align: center;"><a href="FacultyCtl?id=<%=bean.getId()%>">Edit</a></td>
+					<td style="text-align: center;"><a href="<%=ORSView.FACULTY_CTL%>?id=<%=bean.getId()%>">Edit</a></td>
 				</tr>
 				<%
 					}
@@ -125,5 +125,6 @@
 			%>
 		</form>
 	</div>
+	<%@ include file="Footer.jsp" %>
 </body>
 </html>

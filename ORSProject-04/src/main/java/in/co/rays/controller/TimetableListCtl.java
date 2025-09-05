@@ -12,9 +12,11 @@ import org.apache.log4j.Logger;
 
 import in.co.rays.bean.BaseBean;
 import in.co.rays.bean.CourseBean;
+import in.co.rays.bean.SubjectBean;
 import in.co.rays.bean.TimetableBean;
 import in.co.rays.exception.ApplicationException;
 import in.co.rays.model.CourseModel;
+import in.co.rays.model.SubjectModel;
 import in.co.rays.model.TimetableModel;
 import in.co.rays.util.DataUtility;
 import in.co.rays.util.PropertyReader;
@@ -41,11 +43,11 @@ public class TimetableListCtl extends BaseCtl {
 		log.info("TimetableListCtl preload Method Started");
 
 		CourseModel courseModel = new CourseModel();
-		TimetableModel timetableModel = new TimetableModel();
+		SubjectModel subjectModel = new SubjectModel();
 
 		try {
 			List<CourseBean> courseList = courseModel.list();
-			List<TimetableBean> subjectList = timetableModel.list();
+			List<SubjectBean> subjectList = subjectModel.list();
 
 			request.setAttribute("courseList", courseList);
 			request.setAttribute("subjectList", subjectList);

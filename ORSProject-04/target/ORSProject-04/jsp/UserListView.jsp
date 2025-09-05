@@ -59,7 +59,7 @@
                         <%=HTMLUtility.getList("roleId", String.valueOf(bean.getRoleId()), roleList)%>&emsp;
 
 						 <label><b>DOB : </b></label>
-                         <input type="date" name="dob" placeholder="Enter dob" value="<%=ServletUtility.getParameter("dob", request)%>">&emsp;
+                         <input type="text" name="dob" placeholder="Enter dob" id="udate" value="<%=ServletUtility.getParameter("dob", request)%>">&emsp;
 
                         <input type="submit" name="operation" value="<%=UserListCtl.OP_SEARCH%>">
                         &nbsp;
@@ -95,7 +95,7 @@
 
                 <tr>
                     <td style="text-align: center;">
-                        <input type="checkbox" name="ids" value="<%=bean.getId()%>"
+                        <input type="checkbox" class="case" name="ids" value="<%=bean.getId()%>"
                             <%= (user.getId() == bean.getId() || bean.getRoleId() == RoleBean.ADMIN) ? "disabled" : "" %>>
                     </td>
                     <td style="text-align: center;"><%=index++%></td>
@@ -107,7 +107,7 @@
                     <td style="text-align: center;"><%=date%></td>
                     <td style="text-align: center; text-transform: capitalize;"><%=roleBean.getName()%></td>
                     <td style="text-align: center;">
-                        <a href="UserCtl?id=<%=bean.getId()%>" 
+                        <a href="<%=ORSView.USER_CTL%>?id=<%=bean.getId()%>" 
                            <%= (user.getId() == bean.getId() || bean.getRoleId() == RoleBean.ADMIN) ? "onclick='return false;'" : "" %>>Edit</a>
                     </td>
                 </tr>
@@ -151,5 +151,6 @@
             %>
         </form>
     </div>
+    <%@ include file="Footer.jsp" %>
 </body>
 </html>
