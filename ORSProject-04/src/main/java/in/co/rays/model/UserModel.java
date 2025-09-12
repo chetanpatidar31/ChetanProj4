@@ -468,7 +468,7 @@ public class UserModel {
 			}
 			flag = true;
 		} else {
-			throw new RecordNotFoundException("Login Id not exist");
+			throw new RecordNotFoundException("Login Id not exist or password not matched");
 		}
 
 		HashMap<String, String> map = new HashMap<String, String>();

@@ -58,8 +58,8 @@
                         <label><b>Role : </b></label>
                         <%=HTMLUtility.getList("roleId", String.valueOf(bean.getRoleId()), roleList)%>&emsp;
 
-						 <label><b>DOB : </b></label>
-                         <input type="text" name="dob" placeholder="Enter dob" id="udate" value="<%=ServletUtility.getParameter("dob", request)%>">&emsp;
+						<%--  <label><b>DOB : </b></label>
+                         <input type="text" name="dob" placeholder="Enter dob" id="udate" value="<%=ServletUtility.getParameter("dob", request)%>">&emsp; --%>
 
                         <input type="submit" name="operation" value="<%=UserListCtl.OP_SEARCH%>">
                         &nbsp;
@@ -150,6 +150,8 @@
                 }
             %>
         </form>
+        
+        <br><br><br><br>
     </div>
     <%@ include file="Footer.jsp" %>
 </body>
