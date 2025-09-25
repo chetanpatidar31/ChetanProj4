@@ -51,13 +51,13 @@
                         <label><b>Full Name :</b></label>
                         <input type="text" name="fullName" placeholder="Enter full Name" value="<%=ServletUtility.getParameter("fullName", request)%>">&emsp;
 
-                    	<label><b>Contact No :</b></label>
-                    	<input type="text" name="contactNo" placeholder="Enter Contact No" value="<%=ServletUtility.getParameter("contactNo", request)%>">
+                    	<%-- <label><b>Contact No :</b></label>
+                    	<input type="text" name="contactNo" placeholder="Enter Contact No" value="<%=ServletUtility.getParameter("contactNo", request)%>"> --%>
 
                         <label><b>Username : </b></label>
                         <%=HTMLUtility.getList("username", String.valueOf(bean.getUsername()), usernameList)%>&emsp;
 
-						 <label><b>BirthDate : </b></label>
+						 <label><b>Birth Date : </b></label>
                          <input type="text" name="birthDate" placeholder="Enter Birth Date" id="udate" value="<%=ServletUtility.getParameter("birthDate", request)%>">&emsp;
 
                         <input type="submit" name="operation" value="<%=EmployeeListCtl.OP_SEARCH%>">

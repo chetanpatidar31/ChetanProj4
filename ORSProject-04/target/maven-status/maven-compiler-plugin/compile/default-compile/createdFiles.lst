@@ -5,6 +5,7 @@ in\co\rays\bean\TimetableBean.class
 in\co\rays\bean\SubjectBean.class
 in\co\rays\controller\SubjectListCtl.class
 in\co\rays\controller\UserCtl.class
+in\co\rays\bean\EmployeeBean.class
 in\co\rays\bean\MarksheetBean.class
 in\co\rays\controller\ChangePasswordCtl.class
 in\co\rays\controller\ErrorCtl.class
@@ -34,17 +35,20 @@ in\co\rays\util\ServletUtility.class
 in\co\rays\model\CourseModel.class
 in\co\rays\controller\LoginCtl.class
 in\co\rays\exception\DuplicateRecordException.class
+in\co\rays\controller\EmployeeCtl.class
 in\co\rays\test\TestTimetableModel.class
 in\co\rays\bean\DropdownListBean.class
 in\co\rays\bean\BaseBean.class
 in\co\rays\controller\MarksheetListCtl.class
 in\co\rays\util\JDBCDataSource.class
 in\co\rays\controller\CourseCtl.class
+in\co\rays\controller\EmployeeListCtl.class
 in\co\rays\model\StudentModel.class
 in\co\rays\controller\StudentListCtl.class
 in\co\rays\util\PropertyReader.class
 in\co\rays\controller\ForgetPasswordCtl.class
 in\co\rays\model\RoleModel.class
+in\co\rays\test\TestEmployeeModel.class
 in\co\rays\util\DataUtility.class
 in\co\rays\controller\UserRegistrationCtl.class
 in\co\rays\model\TimetableModel.class
@@ -56,6 +60,7 @@ in\co\rays\controller\UserListCtl.class
 in\co\rays\controller\StudentCtl.class
 in\co\rays\test\TestCourseModel.class
 in\co\rays\controller\GetMarksheetCtl.class
+in\co\rays\model\EmployeeModel.class
 in\co\rays\controller\BaseCtl.class
 in\co\rays\controller\FacultyCtl.class
 in\co\rays\test\TestRoleModel.class

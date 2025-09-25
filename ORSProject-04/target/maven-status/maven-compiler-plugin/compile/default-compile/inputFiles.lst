@@ -27,11 +27,14 @@ E:\backupProj\ORS_4Practice\ORSProject-04\src\main\java\in\co\rays\test\TestCour
 E:\backupProj\ORS_4Practice\ORSProject-04\src\main\java\in\co\rays\util\ServletUtility.java
 E:\backupProj\ORS_4Practice\ORSProject-04\src\main\java\in\co\rays\test\TestCollegeModel.java
 E:\backupProj\ORS_4Practice\ORSProject-04\src\main\java\in\co\rays\bean\MarksheetBean.java
+E:\backupProj\ORS_4Practice\ORSProject-04\src\main\java\in\co\rays\controller\EmployeeCtl.java
 E:\backupProj\ORS_4Practice\ORSProject-04\src\main\java\in\co\rays\bean\RoleBean.java
 E:\backupProj\ORS_4Practice\ORSProject-04\src\main\java\in\co\rays\controller\RoleCtl.java
 E:\backupProj\ORS_4Practice\ORSProject-04\src\main\java\in\co\rays\bean\DropdownListBean.java
 E:\backupProj\ORS_4Practice\ORSProject-04\src\main\java\in\co\rays\controller\MyProfileCtl.java
 E:\backupProj\ORS_4Practice\ORSProject-04\src\main\java\in\co\rays\bean\UserBean.java
+E:\backupProj\ORS_4Practice\ORSProject-04\src\main\java\in\co\rays\model\EmployeeModel.java
+E:\backupProj\ORS_4Practice\ORSProject-04\src\main\java\in\co\rays\test\TestEmployeeModel.java
 E:\backupProj\ORS_4Practice\ORSProject-04\src\main\java\in\co\rays\test\TestSubjectModel.java
 E:\backupProj\ORS_4Practice\ORSProject-04\src\main\java\in\co\rays\controller\CourseCtl.java
 E:\backupProj\ORS_4Practice\ORSProject-04\src\main\java\in\co\rays\util\EmailMessage.java
@@ -41,6 +44,8 @@ E:\backupProj\ORS_4Practice\ORSProject-04\src\main\java\in\co\rays\controller\Ba
 E:\backupProj\ORS_4Practice\ORSProject-04\src\main\java\in\co\rays\controller\StudentCtl.java
 E:\backupProj\ORS_4Practice\ORSProject-04\src\main\java\in\co\rays\controller\CollegeCtl.java
 E:\backupProj\ORS_4Practice\ORSProject-04\src\main\java\in\co\rays\model\StudentModel.java
+E:\backupProj\ORS_4Practice\ORSProject-04\src\main\java\in\co\rays\bean\EmployeeBean.java
+E:\backupProj\ORS_4Practice\ORSProject-04\src\main\java\in\co\rays\controller\EmployeeListCtl.java
 E:\backupProj\ORS_4Practice\ORSProject-04\src\main\java\in\co\rays\bean\TimetableBean.java
 E:\backupProj\ORS_4Practice\ORSProject-04\src\main\java\in\co\rays\controller\CollegeListCtl.java
 E:\backupProj\ORS_4Practice\ORSProject-04\src\main\java\in\co\rays\bean\StudentBean.java
