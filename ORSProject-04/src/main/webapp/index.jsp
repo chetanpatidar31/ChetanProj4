@@ -19,7 +19,7 @@
 			ServletUtility.forward(ORSView.WELCOME_VIEW, request, response);
 		}
 	%>
-	<marquee behavior="alternate" scrollamount="300" loop="1">
+	<!-- <marquee behavior="alternate" scrollamount="300" loop="1"> -->
 		<div align="center">
 			<img src="img/customLogo.jpg" align="middle" width="318" height="127"
 				border="0">
