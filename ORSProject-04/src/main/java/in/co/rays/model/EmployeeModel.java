@@ -24,7 +24,7 @@ public class EmployeeModel {
 	 * @return next primary key
 	 * @throws ApplicationException if any database error occurs
 	 */
-	public int nextPk() throws ApplicationException {
+	public Integer nextPk() throws ApplicationException {
 		log.info("EmployeeModel nextPk started");
 		int pk = 0;
 		Connection conn = null;
